@@ -1,0 +1,1264 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Toán 10 Thử Thách</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Sans+Math&display=swap">
+<style>
+/* Bố cục: một cột trên điện thoại; trên máy tính, bài làm chia hai cột (câu hỏi | bảng số câu). Nền giấy kẻ ô, ký hiệu toán trôi nhẹ phía sau. */
+:root{
+  --bg:#EDF1FA; --grid:rgba(70,90,150,.075); --surface:#FFFFFF; --surface2:#F4F6FC; --ink:#0E1A33; --muted:#566384; --line:#D6DDEC;
+  --brand:#5B3DF5; --brand2:#8A5CFF; --on-brand:#FFFFFF; --brand-soft:#ECE8FF;
+  --easy:#0B9A68; --normal:#D98300; --hard:#E0185F;
+  --ok:#0B9A68; --ok-bg:#DDF5EB; --bad:#D4283A; --bad-bg:#FDE7EA; --warn:#B7791F; --warn-bg:#FFF3D6;
+  --shadow:0 10px 30px rgba(35,45,100,.12); --shadow-sm:0 2px 8px rgba(35,45,100,.08);
+  --gold1:#FFE98A; --gold2:#F2BE2B; --gold-ink:#3B2C00;
+  --sil1:#F1F4F9; --sil2:#BFC8D6; --sil-ink:#1F2937;
+  --bro1:#F0C9A4; --bro2:#C9833F; --bro-ink:#3A1F08;
+  --font-d:'Baloo 2','Be Vietnam Pro',system-ui,sans-serif;
+  --font-b:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-m:'Be Vietnam Pro','Noto Sans Math','Cambria Math','Segoe UI Symbol',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A0F1F; --grid:rgba(140,160,255,.06); --surface:#131B33; --surface2:#1A2442; --ink:#E8ECF9; --muted:#9CA9C9; --line:#27325A;
+    --brand:#8F7BFF; --brand2:#B08CFF; --on-brand:#0A0F1F; --brand-soft:#262058;
+    --easy:#34D399; --normal:#FBBF24; --hard:#FB7185;
+    --ok:#4ADE9B; --ok-bg:#10341F; --bad:#FF8A95; --bad-bg:#3B151C; --warn:#FBBF24; --warn-bg:#3A2D0B;
+    --shadow:0 10px 30px rgba(0,0,0,.45); --shadow-sm:0 2px 8px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A0F1F; --grid:rgba(140,160,255,.06); --surface:#131B33; --surface2:#1A2442; --ink:#E8ECF9; --muted:#9CA9C9; --line:#27325A;
+  --brand:#8F7BFF; --brand2:#B08CFF; --on-brand:#0A0F1F; --brand-soft:#262058;
+  --easy:#34D399; --normal:#FBBF24; --hard:#FB7185;
+  --ok:#4ADE9B; --ok-bg:#10341F; --bad:#FF8A95; --bad-bg:#3B151C; --warn:#FBBF24; --warn-bg:#3A2D0B;
+  --shadow:0 10px 30px rgba(0,0,0,.45); --shadow-sm:0 2px 8px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--font-b);min-height:100vh;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:30px 30px;background-attachment:fixed}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{font-family:var(--font-d);line-height:1.15;text-wrap:balance}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px}
+
+/* nền ký hiệu */
+.bgfx{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.bgfx span{position:absolute;left:var(--x);top:var(--y);font:700 var(--s,3rem)/1 var(--font-m);color:var(--brand);opacity:.09;animation:floaty var(--t,14s) ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-22px) rotate(5deg)}}
+.app{position:relative}
+
+/* thanh trên */
+.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top-in{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font:700 1.15rem var(--font-d);cursor:pointer;background:none;border:0;padding:0}
+.logo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font:700 1.2rem var(--font-m);box-shadow:var(--shadow-sm)}
+.top-actions{display:flex;gap:8px}
+.icon-btn{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font:700 1rem var(--font-d);transition:transform .15s,background .15s}
+.icon-btn:hover{transform:translateY(-2px);background:var(--brand-soft)}
+.icon-btn:active{transform:scale(.94)}
+.icon-btn svg{width:20px;height:20px}
+main{padding-block:22px 90px}
+.screen{animation:fadeUp .45s ease backwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* nút */
+.btn{border:0;border-radius:14px;padding:12px 20px;font:600 1rem var(--font-d);background:var(--surface);border:1px solid var(--line);color:var(--ink);transition:transform .15s,box-shadow .15s,filter .15s;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:var(--on-brand);border-color:transparent;box-shadow:0 8px 20px color-mix(in srgb,var(--brand) 35%,transparent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent}
+.btn.small{min-height:38px;padding:8px 14px;font-size:.92rem;border-radius:12px}
+.btn.big{min-height:54px;font-size:1.15rem;padding-inline:28px}
+.btn.danger{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,var(--line))}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+.eyebrow{font:700 .8rem var(--font-d);letter-spacing:.1em;text-transform:uppercase;color:var(--brand)}
+.muted{color:var(--muted)}
+
+/* trang chủ */
+.hero{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.hero h1{font-size:clamp(2rem,7vw,3.2rem);font-weight:800;letter-spacing:-.01em;background:linear-gradient(90deg,var(--ink),var(--brand));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:60ch;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{font-size:.82rem;padding:4px 12px;border-radius:99px;background:var(--surface);border:1px solid var(--line);color:var(--muted)}
+.chip b{color:var(--ink);font-weight:600}
+.home-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+@media(min-width:900px){.home-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:start}}
+.start-card{display:flex;flex-direction:column;gap:14px}
+.start-card label.lbl{font:600 1rem var(--font-d)}
+.name-in{width:100%;padding:13px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface2);font-weight:500;transition:border-color .15s,box-shadow .15s}
+.name-in:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 20%,transparent)}
+.err{color:var(--bad);font-size:.9rem;min-height:1.2em}
+.modes{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+@media(min-width:560px){.modes{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mode{--m:var(--easy);position:relative;text-align:left;border-radius:16px;border:2px solid var(--line);background:var(--surface2);padding:14px;display:flex;flex-direction:column;gap:2px;transition:transform .18s,border-color .18s,box-shadow .18s,background .18s;overflow:hidden}
+.mode[data-mode="normal"]{--m:var(--normal)}
+.mode[data-mode="hard"]{--m:var(--hard)}
+.mode:hover{transform:translateY(-3px)}
+.mode .m-top{display:flex;align-items:center;justify-content:space-between}
+.mode .m-name{font:700 1.3rem var(--font-d);color:var(--m)}
+.mode .m-mult{font:700 .9rem var(--font-d);padding:2px 10px;border-radius:99px;background:color-mix(in srgb,var(--m) 16%,transparent);color:var(--m)}
+.mode .m-desc{font-size:.85rem;color:var(--muted)}
+.mode .m-max{font-size:.8rem;color:var(--muted);margin-top:4px}
+.mode .m-max b{color:var(--ink)}
+.mode[aria-checked="true"]{border-color:var(--m);background:color-mix(in srgb,var(--m) 9%,var(--surface));box-shadow:0 8px 22px color-mix(in srgb,var(--m) 25%,transparent);transform:translateY(-3px)}
+.mode[aria-checked="true"]::after{content:"";position:absolute;right:-18px;bottom:-18px;width:64px;height:64px;border-radius:50%;background:color-mix(in srgb,var(--m) 22%,transparent)}
+.start-row{display:flex;flex-wrap:wrap;gap:10px}
+.start-row .primary{flex:1 1 220px}
+.struct{display:flex;flex-wrap:wrap;gap:8px;font-size:.85rem;color:var(--muted)}
+.struct span{padding:3px 10px;border-radius:99px;background:var(--surface2);border:1px dashed var(--line)}
+
+/* bảng xếp hạng */
+.lb-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.lb-head h2{font-size:1.35rem}
+.sync{font-size:.78rem;color:var(--muted)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tab{border:1px solid var(--line);background:var(--surface2);border-radius:99px;padding:6px 14px;font:600 .88rem var(--font-d);transition:background .15s,color .15s,transform .15s}
+.tab:hover{transform:translateY(-1px)}
+.tab[aria-selected="true"]{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.board{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.board li{display:grid;grid-template-columns:38px minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:10px 14px;border-radius:12px;background:var(--surface2);border:1px solid var(--line);font-variant-numeric:tabular-nums;position:relative;overflow:hidden;animation:fadeUp .35s ease both}
+.board li.colhead{background:transparent;border:0;padding-block:0 2px;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.board .rk{font:700 1rem var(--font-d);text-align:center}
+.board .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;display:flex;align-items:center;gap:8px;min-width:0}
+.board .nm span.t{overflow:hidden;text-overflow:ellipsis}
+.board .sc{font:700 1rem var(--font-d);text-align:right;min-width:3.4rem}
+.board .tm{color:var(--muted);font-size:.85rem;min-width:3rem;text-align:right}
+.tag{font:700 .68rem var(--font-d);padding:1px 8px;border-radius:99px;background:color-mix(in srgb,var(--m) 18%,transparent);color:var(--m);flex:0 0 auto}
+.tag.easy{--m:var(--easy)}.tag.normal{--m:var(--normal)}.tag.hard{--m:var(--hard)}
+.board li.r1{background:linear-gradient(100deg,var(--gold1),var(--gold2));color:var(--gold-ink);border-color:transparent;box-shadow:0 6px 18px rgba(242,190,43,.35)}
+.board li.r2{background:linear-gradient(100deg,var(--sil1),var(--sil2));color:var(--sil-ink);border-color:transparent;box-shadow:0 6px 18px rgba(150,165,190,.3)}
+.board li.r3{background:linear-gradient(100deg,var(--bro1),var(--bro2));color:var(--bro-ink);border-color:transparent;box-shadow:0 6px 18px rgba(201,131,63,.3)}
+.board li.r1 .tm,.board li.r2 .tm,.board li.r3 .tm{color:inherit;opacity:.8}
+.board li.r1 .rk,.board li.r2 .rk,.board li.r3 .rk{font-size:1.25rem}
+.board li.r1::after,.board li.r2::after,.board li.r3::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);animation:shine 4.5s ease-in-out infinite}
+.board li.r2::after{animation-delay:.6s}.board li.r3::after{animation-delay:1.2s}
+@keyframes shine{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+.board li.me{outline:2px solid var(--brand);outline-offset:1px}
+.empty{padding:20px;text-align:center;color:var(--muted);border:1.5px dashed var(--line);border-radius:14px}
+.spin{animation:spin .8s linear}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* làm bài */
+.qbar{position:sticky;top:calc(58px + env(safe-area-inset-top,0px));z-index:15;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:16px;margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.qbar-in{padding:8px 12px;display:flex;align-items:center;gap:10px}
+.mode-badge{font:700 .85rem var(--font-d);padding:3px 12px;border-radius:99px;background:color-mix(in srgb,var(--m,var(--easy)) 18%,transparent);color:var(--m,var(--easy));flex:0 0 auto}
+.qbar .who{flex:1;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qbar .cnt{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;flex:0 0 auto}
+.timer{font:700 1.05rem var(--font-d);font-variant-numeric:tabular-nums;flex:0 0 auto}
+.prog{height:5px;background:var(--line)}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));transition:width .3s}
+.quiz-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+@media(min-width:960px){.quiz-grid{grid-template-columns:minmax(0,1fr) 320px;align-items:start}}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px;min-height:340px}
+.qcard.enter-r{animation:inR .32s ease both}.qcard.enter-l{animation:inL .32s ease both}
+@keyframes inR{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+@keyframes inL{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+.qhead{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.qno{font:800 1.4rem var(--font-d);color:var(--brand)}
+.qno small{font-size:.9rem;color:var(--muted);font-weight:600}
+.pill{font:600 .78rem var(--font-d);padding:3px 11px;border-radius:99px;background:var(--surface2);border:1px solid var(--line);color:var(--muted)}
+.pill.adv{background:var(--warn-bg);color:var(--warn);border-color:transparent}
+.pill.flag{background:var(--warn-bg);color:var(--warn);border-color:transparent}
+.qtext{font:400 1.12rem/1.7 var(--font-m);display:flex;flex-direction:column;gap:6px}
+.qtext p{white-space:pre-wrap}
+.sys{display:flex;align-items:center;gap:6px;margin:4px 0 4px 6px}
+.brace{font:300 calc(var(--n)*1.5rem)/1 var(--font-m);color:var(--brand);transform:scaleX(.75);transform-origin:right center}
+.sys-l{display:flex;flex-direction:column;gap:2px;font-weight:500}
+.opts{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+@media(min-width:700px){.opts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;padding:12px 14px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);font:400 1.02rem/1.45 var(--font-m);min-height:56px;transition:transform .15s,border-color .15s,background .15s,box-shadow .15s}
+.opt:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--brand) 50%,var(--line))}
+.opt:active{transform:scale(.985)}
+.opt .lt{flex:0 0 auto;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:700 1rem var(--font-d);background:var(--surface);border:1.5px solid var(--line);transition:all .15s}
+.opt .tx{min-width:0;overflow-wrap:anywhere}
+.opt[aria-pressed="true"]{border-color:var(--brand);background:var(--brand-soft);box-shadow:0 6px 18px color-mix(in srgb,var(--brand) 25%,transparent)}
+.opt[aria-pressed="true"] .lt{background:var(--brand);border-color:var(--brand);color:var(--on-brand);animation:pop .25s ease}
+@keyframes pop{50%{transform:scale(1.25)}}
+.fill{display:flex;flex-direction:column;gap:12px;max-width:380px}
+.fill label{font:600 .95rem var(--font-d)}
+.fill-in{width:100%;font:700 1.8rem var(--font-d);padding:10px 16px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);text-align:right;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.fill-in:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 20%,transparent)}
+.keypad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.key{height:54px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font:700 1.25rem var(--font-d);transition:transform .1s,background .15s}
+.key:hover{background:var(--brand-soft)}
+.key:active{transform:scale(.92)}
+.key.fn{background:var(--surface2);font-size:1rem}
+.key.del{color:var(--bad)}
+.hint{font-size:.85rem;color:var(--muted)}
+.qctrl{display:flex;gap:10px;margin-top:14px}
+.qctrl .btn{flex:1}
+@media(max-width:959px){
+  .qctrl .btn{padding-inline:4px;font-size:.86rem;min-height:48px;white-space:nowrap}
+  .qctrl{position:fixed;left:0;right:0;bottom:0;z-index:18;margin:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+}
+.side{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px}
+@media(min-width:960px){.side{position:sticky;top:calc(138px + env(safe-area-inset-top,0px))}.side .close{display:none}}
+@media(max-width:959px){
+  .side{position:fixed;left:0;right:0;bottom:0;z-index:40;border-radius:24px 24px 0 0;max-height:82vh;overflow:auto;transform:translateY(105%);transition:transform .3s ease;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+  .side.open{transform:none}
+}
+.side-h{display:flex;align-items:center;justify-content:space-between}
+.side h3{font-size:1.1rem}
+.grid-t{font:600 .8rem var(--font-d);color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.ngrid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+@media(min-width:960px){.ngrid{grid-template-columns:repeat(8,minmax(0,1fr))}}
+.nb{position:relative;aspect-ratio:1;border-radius:10px;border:1.5px solid var(--line);background:var(--surface2);font:700 .85rem var(--font-d);padding:0;font-variant-numeric:tabular-nums;transition:transform .12s,background .15s}
+.nb:hover{transform:translateY(-2px)}
+.nb.done{background:color-mix(in srgb,var(--brand) 18%,var(--surface));border-color:var(--brand)}
+.nb.cur{background:var(--brand);border-color:var(--brand);color:var(--on-brand);transform:scale(1.08)}
+.nb.adv::before{content:"★";position:absolute;top:-1px;left:2px;font-size:.6rem;color:var(--warn)}
+.nb.cur.adv::before{color:#fff}
+.nb.flag::after{content:"";position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;background:var(--warn);border:2px solid var(--surface)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.78rem;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;vertical-align:-2px;margin-right:4px;border:1.5px solid var(--line)}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.9rem}
+.switch{width:46px;height:26px;border-radius:99px;border:1px solid var(--line);background:var(--surface2);position:relative;padding:0;transition:background .2s}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--muted);transition:transform .2s,background .2s}
+.switch[aria-checked="true"]{background:var(--brand);border-color:var(--brand)}
+.switch[aria-checked="true"]::after{transform:translateX(20px);background:#fff}
+.backdrop{position:fixed;inset:0;background:rgba(5,10,30,.5);z-index:35;animation:fadeIn .2s ease both}
+@keyframes fadeIn{from{opacity:0}}
+
+/* kết quả */
+.res-hero{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-bottom:18px}
+@media(min-width:800px){.res-hero{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}}
+.score-card{position:relative;overflow:hidden;background:linear-gradient(135deg,color-mix(in srgb,var(--m,var(--brand)) 20%,var(--surface)),var(--surface));border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px}
+.score-card .big{font:800 clamp(3.4rem,16vw,5.4rem)/1 var(--font-d);font-variant-numeric:tabular-nums;color:var(--m,var(--brand))}
+.score-card .big small{font-size:.32em;color:var(--muted);font-weight:600}
+.facts{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:6px;font-variant-numeric:tabular-nums}
+.facts b{font-family:var(--font-d)}
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar-row{display:grid;grid-template-columns:minmax(0,9rem) 1fr 3.4rem;gap:10px;align-items:center;font-size:.9rem}
+.bar-row .tt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-row .b{height:11px;border-radius:7px;background:var(--line);overflow:hidden}
+.bar-row .b i{display:block;height:100%;width:0;border-radius:7px;background:linear-gradient(90deg,var(--brand),var(--brand2));transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.bar-row .n{text-align:right;font:700 .9rem var(--font-d);font-variant-numeric:tabular-nums}
+.note{padding:10px 14px;border-radius:12px;background:var(--warn-bg);color:var(--warn);font-size:.9rem}
+.sec{margin-top:26px}
+.sec>h2{font-size:1.3rem;margin-bottom:12px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.rv{display:flex;flex-direction:column;gap:10px}
+.rv-item{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--bad);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.rv-item.ok{border-left-color:var(--ok)}
+.rv-item.skip{border-left-color:var(--warn)}
+.rv-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:600}
+.rv-top .pts{margin-left:auto;font:700 .9rem var(--font-d)}
+.rv-q{font:400 .98rem/1.6 var(--font-m)}
+.rv-q p{white-space:pre-wrap}
+.rv-opts{display:grid;gap:6px;font:400 .92rem var(--font-m)}
+.rv-o{padding:7px 12px;border-radius:10px;background:var(--surface2);display:flex;gap:8px}
+.rv-o.good{background:var(--ok-bg);color:var(--ok);font-weight:600}
+.rv-o.wrong{background:var(--bad-bg);color:var(--bad)}
+.rv-ans{display:flex;gap:6px 16px;flex-wrap:wrap;font-weight:500}
+.rv-ans .you{color:var(--bad);text-decoration:line-through}
+.rv-ans .key{color:var(--ok);font-weight:700}
+
+/* giải thích từng câu */
+.rv-exp-btn{align-self:flex-start;margin-top:4px}
+.rv-exp-btn[aria-expanded="true"]{background:var(--brand-soft);border-color:var(--brand)}
+.rv-exp{background:var(--brand-soft);border:1px solid color-mix(in srgb,var(--brand) 35%,var(--line));border-radius:12px;padding:10px 14px;font:400 .93rem/1.6 var(--font-m);animation:fadeUp .25s ease backwards}
+.rv-exp b{font-family:var(--font-d);color:var(--brand)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.perfect{padding:16px;border-radius:14px;background:var(--ok-bg);color:var(--ok);font-weight:600}
+
+/* loading + modal */
+.loader{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:30px 30px;transition:opacity .45s,visibility .45s}
+.loader.out{opacity:0;visibility:hidden}
+.ld-card{width:min(92vw,380px);text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;padding:20px}
+.ld-orbit{position:relative;width:130px;height:130px;margin-bottom:6px}
+.ld-orbit i{position:absolute;inset:34px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand2));box-shadow:0 0 40px color-mix(in srgb,var(--brand) 55%,transparent);animation:pulse 1.6s ease-in-out infinite}
+.ld-orbit i::after{content:"∑";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:700 1.7rem var(--font-m)}
+.ld-orbit span{position:absolute;left:50%;top:50%;width:0;height:0;font:700 1.3rem var(--font-m);color:var(--brand);animation:orbit 3.2s linear infinite;animation-delay:calc(var(--k)*-.8s)}
+@keyframes orbit{from{transform:rotate(0) translateX(60px) rotate(0)}to{transform:rotate(360deg) translateX(60px) rotate(-360deg)}}
+@keyframes pulse{50%{transform:scale(1.12)}}
+.ld-card h1{font-size:1.9rem;font-weight:800}
+.ld-bar{width:100%;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.ld-bar div{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--brand),var(--brand2),var(--brand));background-size:200% 100%;animation:slide 1.2s linear infinite;transition:width .25s}
+@keyframes slide{to{background-position:-200% 0}}
+.ld-tip{color:var(--muted);font-size:.92rem;min-height:2.8em}
+.overlay{position:fixed;inset:0;z-index:60;background:rgba(5,10,30,.55);display:grid;place-items:center;padding:16px;animation:fadeIn .2s ease both}
+.modal{width:min(94vw,460px);max-height:88vh;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;animation:fadeUp .25s ease both}
+.modal h2{font-size:1.35rem}
+.modal .body{display:flex;flex-direction:column;gap:8px;color:var(--muted);font-size:.95rem}
+.modal .body b{color:var(--ink)}
+.modal .body ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:4px}
+.modal .acts{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:6px}
+.modal .acts .btn{flex:1 1 140px}
+.grading{display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px;text-align:center}
+.grading .ring{width:54px;height:54px;border-radius:50%;border:5px solid var(--line);border-top-color:var(--brand);animation:spin .8s linear infinite}
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:70;background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:99px;font-size:.9rem;font-weight:500;box-shadow:var(--shadow);animation:fadeUp .25s ease both}
+#confetti{position:fixed;inset:0;z-index:80;pointer-events:none;width:100%;height:100%}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(max-width:959px){.desk-only{display:none!important}}
+@media(min-width:960px){.mob-only{display:none!important}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .bgfx span{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bgfx" aria-hidden="true">
+  <span style="--x:6%;--y:14%;--s:3.4rem;--t:13s">∑</span>
+  <span style="--x:84%;--y:10%;--s:3rem;--t:16s;--d:-3s">∈</span>
+  <span style="--x:72%;--y:46%;--s:4rem;--t:15s;--d:-6s">⊂</span>
+  <span style="--x:10%;--y:58%;--s:3.2rem;--t:17s;--d:-2s">≤</span>
+  <span style="--x:46%;--y:80%;--s:3.6rem;--t:14s;--d:-8s">∀</span>
+  <span style="--x:90%;--y:76%;--s:3rem;--t:18s;--d:-5s">π</span>
+  <span style="--x:30%;--y:30%;--s:2.6rem;--t:19s;--d:-9s">∪</span>
+  <span style="--x:58%;--y:8%;--s:2.8rem;--t:12s;--d:-4s">∃</span>
+</div>
+
+<div id="loader" class="loader" role="status" aria-live="polite">
+  <div class="ld-card">
+    <div class="ld-orbit"><span style="--k:0">π</span><span style="--k:1">∈</span><span style="--k:2">⊂</span><span style="--k:3">≤</span><i></i></div>
+    <h1>Toán 10 Thử Thách</h1>
+    <p class="ld-tip" id="ldTip">Đang chuẩn bị đề…</p>
+    <div class="ld-bar"><div id="ldFill"></div></div>
+    <button id="ldSkip" class="btn ghost small" type="button" hidden>Vào ngay</button>
+  </div>
+</div>
+
+<div class="app">
+  <header class="top">
+    <div class="top-in">
+      <button class="brand" id="btnBrand" type="button" aria-label="Về trang chủ"><span class="logo">∑</span><span>Toán 10 Thử Thách</span></button>
+      <div class="top-actions">
+        <button class="icon-btn" id="btnHelp" type="button" aria-label="Hướng dẫn và cách tính điểm">?</button>
+        <button class="icon-btn" id="btnTheme" type="button" aria-label="Đổi giao diện sáng hoặc tối">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- TRANG CHỦ -->
+    <section id="home" class="screen" hidden>
+      <div class="hero">
+        <span class="eyebrow">Toán 10 · Kết nối tri thức</span>
+        <h1>Thử thách Toán 10</h1>
+        <p>Mệnh đề, tập hợp và hệ bất phương trình bậc nhất hai ẩn. Mỗi đề có 50 câu. Chế độ càng khó thì điểm càng cao, nhưng trả lời sai cũng bị trừ nhiều hơn.</p>
+        <div class="chips">
+          <span class="chip"><b>Mệnh đề</b></span>
+          <span class="chip"><b>Tập hợp</b></span>
+          <span class="chip"><b>Hệ bất phương trình bậc nhất hai ẩn</b></span>
+        </div>
+      </div>
+      <div class="home-grid">
+        <div class="card start-card">
+          <label class="lbl" for="nameInput">Tên của bạn</label>
+          <input id="nameInput" class="name-in" type="text" maxlength="30" placeholder="Ví dụ: Nguyễn Văn An" autocomplete="off">
+          <div class="err" id="nameErr" role="alert"></div>
+          <span class="lbl" style="font:600 1rem var(--font-d)" id="modeLbl">Chọn chế độ</span>
+          <div class="modes" role="radiogroup" aria-labelledby="modeLbl" id="modes"></div>
+          <div class="struct"><span>40 câu trắc nghiệm</span><span>10 câu điền số</span><span>2 câu nâng cao</span></div>
+          <div class="start-row">
+            <button id="btnStart" class="btn primary big" type="button">Bắt đầu làm bài</button>
+            <button id="btnHelp2" class="btn ghost" type="button">Cách tính điểm</button>
+          </div>
+        </div>
+        <div class="card"><div class="board-root"></div></div>
+      </div>
+    </section>
+
+    <!-- LÀM BÀI -->
+    <section id="quiz" class="screen" hidden>
+      <div class="qbar">
+        <div class="qbar-in">
+          <span class="mode-badge" id="qMode"></span>
+          <span class="who" id="qWho"></span>
+          <span class="cnt"><span id="qDone">0</span>/50</span>
+          <span class="timer" id="qTimer">00:00</span>
+          <button class="icon-btn" id="btnQuit" type="button" aria-label="Thoát bài làm" style="width:36px;height:36px">✕</button>
+        </div>
+        <div class="prog"><i id="qProg"></i></div>
+      </div>
+      <div class="quiz-grid">
+        <div>
+          <article class="qcard" id="qcard" aria-live="polite"></article>
+          <div class="qctrl">
+            <button class="btn" id="btnPrev" type="button">← Trước</button>
+            <button class="btn mob-only" id="btnList" type="button">Danh sách</button>
+            <button class="btn" id="btnFlag" type="button">Đánh dấu</button>
+            <button class="btn primary" id="btnNext" type="button">Sau →</button>
+          </div>
+        </div>
+        <aside class="side" id="side" aria-label="Danh sách câu hỏi">
+          <div class="side-h"><h3>Danh sách câu</h3><button class="icon-btn close" id="btnSideClose" type="button" aria-label="Đóng danh sách">✕</button></div>
+          <div id="ngrids"></div>
+          <div class="legend"><span><i style="background:var(--surface2)"></i>Chưa làm</span><span><i style="background:color-mix(in srgb,var(--brand) 25%,var(--surface));border-color:var(--brand)"></i>Đã làm</span><span><i style="background:var(--warn-bg);border-color:var(--warn)"></i>Đánh dấu</span><span>★ Nâng cao</span></div>
+          <div class="sw"><span>Tự chuyển sang câu sau khi chọn đáp án</span><button class="switch" id="swAuto" type="button" role="switch" aria-checked="false" aria-label="Tự chuyển câu"></button></div>
+          <button class="btn primary" id="btnSubmit" type="button">Nộp bài</button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- KẾT QUẢ -->
+    <section id="result" class="screen" hidden>
+      <div class="res-hero">
+        <div class="score-card" id="scoreCard">
+          <span class="eyebrow" id="rWho"></span>
+          <div class="big"><span id="rScore">0</span><small> / <span id="rMax">100</span></small></div>
+          <p id="rMsg" style="font-weight:600;font-size:1.05rem"></p>
+          <div class="facts"><span>Đúng: <b id="rCorrect"></b></span><span id="rWrongBox" hidden>Sai: <b id="rWrong"></b></span><span>Thời gian: <b id="rTime"></b></span><span>Hạng: <b id="rRank">…</b></span></div>
+          <div class="note" id="saveNote" hidden></div>
+        </div>
+        <div class="card"><h2 style="font-size:1.2rem;margin-bottom:14px">Điểm theo chủ đề</h2><div class="bars" id="rBars"></div></div>
+      </div>
+      <div class="actions" style="margin-top:0">
+        <button class="btn primary" id="rRetry" type="button">Làm lại chế độ này</button>
+        <button class="btn" id="rOther" type="button">Đổi chế độ khác</button>
+        <button class="btn ghost" id="rHome" type="button">Về trang chủ</button>
+      </div>
+      <div class="sec card"><div class="board-root"></div></div>
+      <div class="sec">
+        <h2>Xem lại bài làm</h2>
+        <div class="filters" id="rFilters"></div>
+        <div class="rv" id="rReview"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="overlayHost"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script>
+(function () {
+'use strict';
+var BANK = {"easy":[{"t":0,"q":"Câu nào sau đây là một mệnh đề?","o":["2 + 3 = 5","Hôm nay trời đẹp quá!","Bạn có khỏe không?","Hãy mở cửa ra."]},{"t":0,"q":"Mệnh đề nào sau đây là mệnh đề đúng?","o":["Hà Nội là thủ đô của Việt Nam.","Số 5 là số chẵn.","−3 > 0","√2 là số hữu tỉ."]},{"t":0,"q":"Mệnh đề nào sau đây là mệnh đề sai?","o":["9 là số nguyên tố.","7 là số nguyên tố.","12 chia hết cho 3.","15 là số lẻ."]},{"t":0,"q":"Phủ định của mệnh đề “Số 5 là số nguyên tố” là:","o":["Số 5 không là số nguyên tố.","Số 5 là số lẻ.","Số 5 chia hết cho 5.","Số 5 là số tự nhiên."]},{"t":0,"q":"Phủ định của mệnh đề “2 + 2 = 5” là:","o":["2 + 2 ≠ 5","2 + 2 > 5","2 + 2 < 5","2 + 2 ≥ 5"]},{"t":0,"q":"Phủ định của mệnh đề “Số 10 chia hết cho 4” là:","o":["Số 10 không chia hết cho 4.","Số 10 chia hết cho 2.","Số 10 là số chẵn.","Số 10 chia hết cho 5."]},{"t":0,"q":"Mệnh đề “P ⇒ Q” chỉ sai khi:","o":["P đúng và Q sai.","P sai và Q đúng.","P sai và Q sai.","P đúng và Q đúng."]},{"t":0,"q":"Mệnh đề “Nếu a và b cùng chia hết cho c thì a + b chia hết cho c” thuộc dạng nào?","o":["Mệnh đề kéo theo (P ⇒ Q).","Mệnh đề phủ định.","Mệnh đề tương đương (P ⇔ Q).","Mệnh đề chứa kí hiệu ∃."]},{"t":0,"q":"Kí hiệu ∀ được đọc là:","o":["với mọi","tồn tại","không tồn tại","suy ra"]},{"t":0,"q":"Kí hiệu ∃ được đọc là:","o":["tồn tại (có ít nhất một)","với mọi","không tồn tại","tương đương"]},{"t":0,"q":"Mệnh đề nào sau đây là mệnh đề đúng?","o":["∀x ∈ ℝ, x² ≥ 0","∃x ∈ ℝ, x² < 0","∀x ∈ ℝ, x² > 0","∀x ∈ ℝ, x > x²"]},{"t":0,"q":"Mệnh đề nào sau đây là mệnh đề đúng?","o":["Nếu 2 > 5 thì 3 > 4.","Nếu 5 > 2 thì 2 > 5.","Nếu 4 là số chẵn thì 4 là số lẻ.","Nếu 7 là số nguyên tố thì 7 chia hết cho 2."]},{"t":0,"q":"Câu nào sau đây là mệnh đề chứa biến?","o":["n + 1 là số chẵn (n là số tự nhiên).","3 + 1 là số chẵn.","Hà Nội là thủ đô của Việt Nam.","2 là số nguyên tố."]},{"t":0,"q":"Nếu mệnh đề P đúng thì mệnh đề phủ định ¬P (đọc là “không P”) có giá trị:","o":["sai","đúng","vừa đúng vừa sai","không xác định được"]},{"t":1,"q":"Cho A = {2; 4; 6; 8; 10}. Số phần tử của tập hợp A là:","o":["5","4","6","10"]},{"t":1,"q":"Cho A = {a; b; c}. Cách viết nào sau đây đúng?","o":["a ∈ A","a ⊂ A","d ∈ A","{a} ∈ A"]},{"t":1,"q":"Kí hiệu ∅ dùng để chỉ tập hợp:","o":["không có phần tử nào","có đúng một phần tử","có vô số phần tử","chỉ chứa số 0"]},{"t":1,"q":"Cho hai tập hợp A = {2; 3; 4; 6; 7} và B = {1; 2; 4; 7; 8}. Tập hợp A ∩ B là:","o":["{2; 4; 7}","{1; 2; 3; 4; 6; 7; 8}","{1; 8}","{3; 6}"]},{"t":1,"q":"Cho hai tập hợp A = {2; 5; 6} và B = {3; 4; 5; 6; 8}. Tập hợp A ∪ B là:","o":["{2; 3; 4; 5; 6; 8}","{3; 4; 8}","{2}","{5; 6}"]},{"t":1,"q":"Cho hai tập hợp A = {6; 7; 8} và B = {1; 2; 4; 7}. Tập hợp A \\ B là:","o":["{6; 8}","{1; 2; 4; 6; 7; 8}","{7}","{1; 2; 4}"]},{"t":1,"q":"Tập hợp ℕ là tập hợp các:","o":["số tự nhiên","số nguyên","số hữu tỉ","số thực"]},{"t":1,"q":"Mệnh đề nào sau đây đúng?","o":["ℕ ⊂ ℤ","ℤ ⊂ ℕ","ℝ ⊂ ℚ","ℚ ⊂ ℤ"]},{"t":1,"q":"Tập hợp A = {a; b} có bao nhiêu tập con?","o":["4","2","3","6"]},{"t":1,"q":"Tập hợp {x ∈ ℝ | 1 < x < 5} viết dưới dạng khoảng, đoạn là:","o":["(1; 5)","[1; 5]","(1; 5]","[1; 5)"]},{"t":1,"q":"Số 5 thuộc tập hợp nào sau đây?","o":["(1; 5]","(1; 5)","(5; 9)","(−∞; 5)"]},{"t":1,"q":"Liệt kê các phần tử của A = {x ∈ ℕ | x < 4}:","o":["{0; 1; 2; 3}","{1; 2; 3}","{0; 1; 2; 3; 4}","{1; 2; 3; 4}"]},{"t":1,"q":"Cho A = {1; 2} và B = {1; 2; 3; 4}. Khẳng định nào sau đây đúng?","o":["A ⊂ B","B ⊂ A","A = B","A ∩ B = ∅"]},{"t":1,"q":"Cho A = {0; 1; 2; 3; 4; 5}. Số phần tử của A là:","o":["6","5","4","7"]},{"t":2,"q":"Bất phương trình bậc nhất hai ẩn x, y có dạng tổng quát là:","o":["ax + by ≤ c (a, b không đồng thời bằng 0)","ax² + bx + c ≤ 0 (a ≠ 0)","ax + b ≤ 0 (chỉ có một ẩn x)","ax + by = c"]},{"t":2,"q":"Miền nghiệm của bất phương trình bậc nhất hai ẩn là:","o":["một nửa mặt phẳng","một đường thẳng","một đường tròn","một đoạn thẳng"]},{"t":2,"q":"Đường thẳng d chia mặt phẳng tọa độ thành mấy nửa mặt phẳng?","o":["2","1","3","4"]},{"t":2,"q":"Miền nghiệm của bất phương trình x ≥ 0 là nửa mặt phẳng:","o":["bên phải trục Oy (kể cả trục Oy)","bên trái trục Oy (kể cả trục Oy)","phía trên trục Ox (kể cả trục Ox)","phía dưới trục Ox (kể cả trục Ox)"]},{"t":2,"q":"Miền nghiệm của bất phương trình y ≥ 0 là nửa mặt phẳng:","o":["phía trên trục Ox (kể cả trục Ox)","phía dưới trục Ox (kể cả trục Ox)","bên phải trục Oy (kể cả trục Oy)","bên trái trục Oy (kể cả trục Oy)"]},{"t":2,"q":"Cặp số (x; y) nào sau đây là một nghiệm của bất phương trình 2x + y ≤ 5?","o":["(2; 1)","(3; 1)","(2; 4)","(3; 4)"]},{"t":2,"q":"Cặp số (x; y) nào sau đây là một nghiệm của bất phương trình x + 2y ≤ 1?","o":["(0; 0)","(2; 3)","(1; 2)","(4; 4)"]},{"t":2,"q":"Cặp số (x; y) nào sau đây là một nghiệm của bất phương trình −x + 2y ≤ 2?","o":["(0; 1)","(2; 4)","(0; 3)","(3; 3)"]},{"t":2,"q":"Cặp số (1; 3) là nghiệm của bất phương trình nào sau đây?","o":["x + y ≥ 4","2x + y ≥ 7","x + y ≥ 6","x + y ≥ 7"]},{"t":2,"q":"Cặp số nào sau đây là nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§2x + y ≤ 6","o":["(1; 1)","(3; 1)","(−2; 1)","(6; −1)"]},{"t":2,"q":"Cặp số nào sau đây là nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + 2y ≤ 8","o":["(4; 0)","(−1; 2)","(2; 6)","(−2; −1)"]},{"t":2,"q":"Cặp số nào sau đây là nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§3x + y ≤ 5","o":["(1; 1)","(2; 4)","(4; 0)","(1; 5)"]},{"t":0,"q":"Cho mệnh đề chứa biến P(x): “x² − 4 = 0” với x ∈ ℝ. Có bao nhiêu giá trị của x để P(x) là mệnh đề đúng?","a":"2","adv":false},{"t":0,"q":"Cho 4 câu: (a) “2 là số nguyên tố”; (b) “9 là số nguyên tố”; (c) “15 chia hết cho 5”; (d) “7 là số chẵn”. Có bao nhiêu câu là mệnh đề đúng?","a":"2","adv":false},{"t":1,"q":"Cho A = {x ∈ ℕ | x < 6}. Tập hợp A có bao nhiêu phần tử?","a":"6","adv":false},{"t":1,"q":"Một tập hợp có 3 phần tử thì có bao nhiêu tập con?","a":"8","adv":false},{"t":1,"q":"Lớp 10A có 40 học sinh. Có 25 bạn chơi bóng đá, 18 bạn chơi cầu lông và 8 bạn chơi cả hai môn. Hỏi có bao nhiêu bạn chơi ít nhất một trong hai môn?","a":"35","adv":false},{"t":2,"q":"Bác An mua x kg gạo tẻ và y kg gạo nếp, tổng khối lượng không quá 20 kg, tức là x + y ≤ 20. Nếu bác mua 12 kg gạo tẻ thì bác mua được tối đa bao nhiêu kg gạo nếp?","a":"8","adv":false},{"t":2,"q":"Cho hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + y ≤ 6\nGiá trị lớn nhất của biểu thức F = 2x + y trên miền nghiệm của hệ là bao nhiêu?","a":"12","adv":false},{"t":2,"q":"Cặp số (3; y) với y nguyên thỏa mãn bất phương trình x + 2y ≤ 7. Giá trị lớn nhất của y là bao nhiêu?","a":"2","adv":false},{"t":2,"q":"Một tiệm bánh làm x bánh loại I và y bánh loại II mỗi ngày. Mỗi bánh loại I cần 2 kg bột, mỗi bánh loại II cần 1 kg bột; tiệm có 100 kg bột. Mỗi ngày làm tối đa 40 bánh loại I. Lãi mỗi bánh loại I là 3 nghìn đồng, mỗi bánh loại II là 2 nghìn đồng. Lãi lớn nhất mỗi ngày là bao nhiêu nghìn đồng?","a":"200","adv":true},{"t":2,"q":"Tìm giá trị nhỏ nhất của biểu thức F = x + 2y trên miền nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + y ≥ 4\n§x ≤ 5","a":"4","adv":true}],"normal":[{"t":0,"q":"Phủ định của mệnh đề “∀x ∈ ℝ, x² > 0” là:","o":["∃x ∈ ℝ, x² ≤ 0","∀x ∈ ℝ, x² ≤ 0","∃x ∈ ℝ, x² > 0","∀x ∈ ℝ, x² < 0"]},{"t":0,"q":"Phủ định của mệnh đề “∃x ∈ ℕ, x² − 3x + 2 = 0” là:","o":["∀x ∈ ℕ, x² − 3x + 2 ≠ 0","∃x ∈ ℕ, x² − 3x + 2 ≠ 0","∀x ∈ ℕ, x² − 3x + 2 = 0","∃x ∈ ℕ, x² − 3x + 2 > 0"]},{"t":0,"q":"Mệnh đề đảo của mệnh đề “Nếu a = b thì a² = b²” là:","o":["Nếu a² = b² thì a = b.","Nếu a ≠ b thì a² ≠ b².","Nếu a² ≠ b² thì a ≠ b.","Nếu a = b thì a² ≠ b²."]},{"t":0,"q":"Mệnh đề nào sau đây đúng?","o":["∃n ∈ ℕ, n² = n","∀n ∈ ℕ, n² > n","∃x ∈ ℝ, x² = −1","∀x ∈ ℤ, x chia hết cho 2"]},{"t":0,"q":"Mệnh đề “P ⇔ Q” đúng khi nào?","o":["Khi P và Q cùng đúng hoặc cùng sai.","Chỉ khi P và Q cùng đúng.","Khi P đúng và Q sai.","Khi P sai hoặc Q sai."]},{"t":0,"q":"Mệnh đề nào sau đây có mệnh đề đảo là mệnh đề đúng?","o":["Nếu a = b thì a³ = b³.","Nếu a chia hết cho 6 thì a chia hết cho 3.","Nếu tứ giác là hình vuông thì tứ giác có bốn cạnh bằng nhau.","Nếu a > 0 thì a² > 0."]},{"t":0,"q":"Cho P: “n chia hết cho 6” và Q: “n chia hết cho 3” (n là số tự nhiên). Mệnh đề P ⇒ Q được phát biểu là:","o":["Điều kiện đủ để n chia hết cho 3 là n chia hết cho 6.","Điều kiện cần để n chia hết cho 3 là n chia hết cho 6.","Điều kiện cần và đủ để n chia hết cho 3 là n chia hết cho 6.","n chia hết cho 3 là điều kiện đủ để n chia hết cho 6."]},{"t":0,"q":"Mệnh đề nào sau đây là mệnh đề sai?","o":["∀x ∈ ℝ, x² ≥ x","∃x ∈ ℝ, x² = 2x","∀x ∈ ℝ, x² + 1 > 0","∃n ∈ ℕ, n + 3 = 3"]},{"t":0,"q":"Phủ định của mệnh đề “Mọi học sinh lớp 10A đều đi học đúng giờ” là:","o":["Có ít nhất một học sinh lớp 10A không đi học đúng giờ.","Mọi học sinh lớp 10A đều đi học muộn.","Không có học sinh lớp 10A nào đi học đúng giờ.","Có ít nhất một học sinh lớp 10A đi học đúng giờ."]},{"t":0,"q":"Phủ định của mệnh đề “x ≥ 3” (x ∈ ℝ) là:","o":["x < 3","x ≤ 3","x > 3","x ≤ 2"]},{"t":0,"q":"Mệnh đề nào sau đây đúng?","o":["∀x ∈ ℝ, x² − 4x + 5 > 0","∃x ∈ ℝ, x² − 4x + 5 = 0","∀x ∈ ℝ, x² − 4x + 5 < 0","∃x ∈ ℝ, x² − 4x + 5 ≤ 0"]},{"t":0,"q":"Phủ định của mệnh đề “Nếu a và b đều chia hết cho 5 thì a + b chia hết cho 5” là:","o":["a và b đều chia hết cho 5 nhưng a + b không chia hết cho 5.","Nếu a và b đều không chia hết cho 5 thì a + b không chia hết cho 5.","a hoặc b không chia hết cho 5 và a + b chia hết cho 5.","Nếu a + b chia hết cho 5 thì a và b đều chia hết cho 5."]},{"t":0,"q":"Giá trị nào của n làm cho mệnh đề “n² chia hết cho 4 ⇒ n chia hết cho 4” sai?","o":["n = 2","n = 4","n = 8","n = 3"]},{"t":0,"q":"Cho P: “3 > 2” và Q: “4 chia hết cho 3”. Mệnh đề nào sau đây đúng?","o":["Q ⇒ P","P ⇒ Q","P ⇔ Q","¬Q ⇔ ¬P"]},{"t":1,"q":"Cho A = {x ∈ ℕ | x² − 5x + 6 = 0}. Liệt kê các phần tử của A:","o":["{2; 3}","{1; 6}","{2; 3; 6}","{−2; −3}"]},{"t":1,"q":"Liệt kê các phần tử của B = {x ∈ ℤ | −2 < x ≤ 3}:","o":["{−1; 0; 1; 2; 3}","{−2; −1; 0; 1; 2; 3}","{−1; 0; 1; 2}","{−2; −1; 0; 1; 2}"]},{"t":1,"q":"Tập hợp A = {a; b; c; d} có bao nhiêu tập con?","o":["16","8","12","15"]},{"t":1,"q":"Tập hợp ∅ có bao nhiêu tập con?","o":["1","0","2","Vô số"]},{"t":1,"q":"Cho A = [1; 7] và B = (5; 11]. Tập hợp A ∩ B là:","o":["(5; 7]","[1; 11]","(7; 11]","[1; 5]"]},{"t":1,"q":"Cho A = (−5; 0] và B = (−3; 2). Tập hợp A ∪ B là:","o":["(−5; 2)","(0; 2)","(−5; −3]","(−3; 0]"]},{"t":1,"q":"Cho A = (−2; 1) và B = (−1; 4). Tập hợp A \\ B là:","o":["(−2; −1]","(−2; 4)","[1; 4)","(−∞; −2] ∪ [4; +∞)"]},{"t":1,"q":"Cho A = [−5; 1] và B = [−2; 2]. Tập hợp B \\ A là:","o":["(1; 2]","[−5; 2]","(−∞; −5) ∪ (2; +∞)","[−2; 1]"]},{"t":1,"q":"Cho A = {1; 2; 3; 4}, B = {3; 4; 5; 6} và C = {4; 6; 8}. Tập hợp (A ∩ B) ∪ C là:","o":["{3; 4; 6; 8}","{4}","{3; 4; 5; 6; 8}","{4; 6}"]},{"t":1,"q":"Cho A = {1; 2; 3; 4; 5}, B = {2; 4; 6; 8} và C = {1; 4; 9}. Tập hợp (A ∪ B) \\ C là:","o":["{2; 3; 5; 6; 8}","{1; 2; 3; 4; 5; 6; 8}","{2; 3; 5; 6; 8; 9}","{1; 4}"]},{"t":1,"q":"Cho A ⊂ B và A ≠ B. Khẳng định nào sau đây đúng?","o":["A ∩ B = A","A ∪ B = A","A \\ B ≠ ∅","B \\ A = ∅"]},{"t":1,"q":"Cho n(A) = 12, n(B) = 9 và n(A ∩ B) = 4. Khi đó n(A ∪ B) bằng:","o":["17","21","25","13"]},{"t":1,"q":"Số nguyên nhỏ nhất thuộc khoảng (−3; 5] là:","o":["−2","−3","5","−4"]},{"t":1,"q":"Cho A = {1; 2; 3}. Có bao nhiêu tập con của A chứa phần tử 1?","o":["4","3","6","8"]},{"t":2,"q":"Đường thẳng là bờ của miền nghiệm của bất phương trình 2x + 3y ≥ 6 có phương trình:","o":["2x + 3y = 6","2x + 3y = 0","2x − 3y = 6","x + y = 6"]},{"t":2,"q":"Phát biểu nào đúng về miền nghiệm của bất phương trình x + y < 3?","o":["Nửa mặt phẳng bờ d: x + y = 3, không kể bờ d, chứa gốc tọa độ O.","Nửa mặt phẳng bờ d: x + y = 3, kể cả bờ d, chứa gốc tọa độ O.","Nửa mặt phẳng bờ d: x + y = 3, không kể bờ d, không chứa gốc tọa độ O.","Nửa mặt phẳng bờ d: x + y = 3, kể cả bờ d, không chứa gốc tọa độ O."]},{"t":2,"q":"Cặp số (x; y) nào sau đây là một nghiệm của bất phương trình 2x − 2y > 1?","o":["(2; 0)","(1; 1)","(2; 4)","(0; 2)"]},{"t":2,"q":"Cặp số (x; y) nào sau đây là một nghiệm của bất phương trình x + 2y > 4?","o":["(2; 2)","(2; −2)","(0; 2)","(3; −1)"]},{"t":2,"q":"Cặp số (x; y) nào sau đây là một nghiệm của bất phương trình 2x − 3y < −1?","o":["(−3; 2)","(−3; −2)","(−1; −3)","(4; 3)"]},{"t":2,"q":"Cặp số (−2; −2) là nghiệm của bất phương trình nào sau đây?","o":["x + 2y < 6","3x + 2y ≥ 1","−x + 3y > −2","−x + 3y > 3"]},{"t":2,"q":"Cặp số (0; −1) là nghiệm của bất phương trình nào sau đây?","o":["x − y > −2","−x + y > 1","3x + y > 2","3x + 3y ≥ 0"]},{"t":2,"q":"Cặp số nào sau đây là nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§2x + 3y ≤ 11\n§2x − y ≥ 2","o":["(2; 1)","(−2; −2)","(−2; 3)","(−2; 4)"]},{"t":2,"q":"Cặp số nào sau đây là nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + y ≤ 9\n§x − 2y ≥ 1","o":["(3; 0)","(4; −2)","(4; −1)","(4; 3)"]},{"t":2,"q":"Cặp số nào sau đây là nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + 3y ≤ 9\n§x − y ≥ 1","o":["(4; 1)","(4; 5)","(−2; 2)","(0; 6)"]},{"t":2,"q":"Giá trị lớn nhất của biểu thức F = 3x + 2y trên miền nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§2x + 3y ≤ 9\n§x ≤ 3","o":["11","12","10","0"]},{"t":2,"q":"Giá trị nhỏ nhất của biểu thức F = 3x + 2y trên miền nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§3x + y ≥ 7\n§x ≤ 8","o":["7","6","14","9"]},{"t":0,"q":"Có bao nhiêu số tự nhiên n < 20 để mệnh đề “n là số nguyên tố” là mệnh đề đúng?","a":"8","adv":false},{"t":0,"q":"Cho mệnh đề chứa biến P(x): “x² − 5x + 6 = 0” với x ∈ ℝ. Tính tổng các giá trị của x để P(x) là mệnh đề đúng.","a":"5","adv":false},{"t":1,"q":"Cho A = {x ∈ ℤ | |x| ≤ 4}. Tập hợp A có bao nhiêu phần tử?","a":"9","adv":false},{"t":1,"q":"Một tập hợp có 4 phần tử thì có bao nhiêu tập con?","a":"16","adv":false},{"t":1,"q":"Trong 45 học sinh, có 30 bạn thích Toán, 25 bạn thích Lý và bạn nào cũng thích ít nhất một trong hai môn. Có bao nhiêu bạn thích cả hai môn?","a":"10","adv":false},{"t":2,"q":"Cho hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + y ≤ 5\n§2x + y ≤ 8\nGiá trị lớn nhất của biểu thức F = 3x + 2y trên miền nghiệm của hệ là bao nhiêu?","a":"13","adv":false},{"t":2,"q":"Cho hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + y ≥ 3\n§x + 2y ≥ 4\nGiá trị nhỏ nhất của biểu thức F = 2x + 3y trên miền nghiệm của hệ là bao nhiêu?","a":"7","adv":false},{"t":2,"q":"Cô Lan có 60 kg gạo để nấu cơm cho x nồi loại I và y nồi loại II. Mỗi nồi loại I cần 2 kg gạo, mỗi nồi loại II cần 3 kg gạo, tức là 2x + 3y ≤ 60. Nếu cô nấu 12 nồi loại I thì cô nấu được tối đa bao nhiêu nồi loại II?","a":"12","adv":false},{"t":2,"q":"Một cơ sở làm bánh sản xuất hai loại bánh X và Y. Mỗi cái bánh X cần 3 kg bột và 2 giờ nướng; mỗi cái bánh Y cần 1 kg bột và 2 giờ nướng. Mỗi ngày cơ sở có tối đa 36 kg bột và 52 giờ nướng. Mỗi cái bánh X lãi 8 nghìn đồng, mỗi cái bánh Y lãi 5 nghìn đồng. Lãi lớn nhất mỗi ngày là bao nhiêu nghìn đồng?","a":"145","adv":true},{"t":2,"q":"Một trại cá pha thức ăn từ hai loại cám A và B. Mỗi kg cám A chứa 2 đơn vị đạm và 3 đơn vị tinh bột; mỗi kg cám B chứa 2 đơn vị đạm và 1 đơn vị tinh bột. Mỗi ngày thức ăn cần ít nhất 20 đơn vị đạm và 12 đơn vị tinh bột. Giá cám A là 8 nghìn đồng/kg, cám B là 6 nghìn đồng/kg. Chi phí nhỏ nhất mỗi ngày là bao nhiêu nghìn đồng?","a":"62","adv":true}],"hard":[{"t":0,"q":"Phủ định của mệnh đề “∀x ∈ ℝ, ∃y ∈ ℝ, y > x” là:","o":["∃x ∈ ℝ, ∀y ∈ ℝ, y ≤ x","∀x ∈ ℝ, ∃y ∈ ℝ, y ≤ x","∃x ∈ ℝ, ∃y ∈ ℝ, y ≤ x","∃x ∈ ℝ, ∀y ∈ ℝ, y < x"]},{"t":0,"q":"Mệnh đề nào sau đây đúng?","o":["∀x ∈ ℝ, ∃y ∈ ℝ, x + y = 0","∃x ∈ ℝ, ∀y ∈ ℝ, x + y = 0","∃x ∈ ℝ, ∀y ∈ ℝ, xy = 1","∀x ∈ ℝ, ∃y ∈ ℝ, xy = 1"]},{"t":0,"q":"Cho các mệnh đề: (1) ∀x ∈ ℝ, x² > 0; (2) ∃x ∈ ℚ, x² = 2; (3) ∀n ∈ ℕ, n(n + 1) chia hết cho 2; (4) ∃x ∈ ℤ, 2x + 1 = 0. Có bao nhiêu mệnh đề đúng?","o":["1","0","2","3"]},{"t":0,"q":"Cho các mệnh đề: (1) Tồn tại số nguyên tố chẵn; (2) ∀x ∈ ℝ, |x| ≥ x; (3) ∃x ∈ ℝ, x² + x + 1 = 0; (4) ∀n ∈ ℕ, n² + n + 1 là số nguyên tố. Có bao nhiêu mệnh đề đúng?","o":["2","1","3","4"]},{"t":0,"q":"Tìm m để mệnh đề “∃x ∈ ℝ, x² − 2x + m = 0” là mệnh đề đúng.","o":["m ≤ 1","m < 1","m ≥ 1","m > 1"]},{"t":0,"q":"Tìm m để mệnh đề “∀x ∈ ℝ, x² − 4x + m ≥ 0” là mệnh đề đúng.","o":["m ≥ 4","m > 4","m ≤ 4","m < 4"]},{"t":0,"q":"Để chứng minh bằng phản chứng mệnh đề “Nếu n² chẵn thì n chẵn”, ta giả sử:","o":["n² chẵn và n lẻ.","n² lẻ và n chẵn.","n² chẵn và n chẵn.","n² lẻ và n lẻ."]},{"t":0,"q":"Giá trị nào của x làm cho mệnh đề “x² > 4 ⇒ x > 2” sai?","o":["x = −3","x = 3","x = 0","x = 5"]},{"t":0,"q":"Mệnh đề nào sau đây tương đương với “Nếu n² chia hết cho 3 thì n chia hết cho 3”?","o":["Nếu n không chia hết cho 3 thì n² không chia hết cho 3.","Nếu n chia hết cho 3 thì n² chia hết cho 3.","Nếu n² không chia hết cho 3 thì n chia hết cho 3.","Nếu n không chia hết cho 3 thì n² chia hết cho 3."]},{"t":0,"q":"Mệnh đề nào sau đây là mệnh đề sai?","o":["∃x ∈ ℝ, x² − 2x + 1 < 0","∀x ∈ ℝ, x² − 2x + 1 ≥ 0","∃x ∈ ℝ, x² − 2x + 1 = 0","∀x ∈ ℝ, x² − 2x + 2 > 0"]},{"t":0,"q":"Tìm m để mệnh đề “x > m ⇒ x² > 4” đúng với mọi x ∈ ℝ.","o":["m ≥ 2","m ≥ −2","m > 2","m ≤ 2"]},{"t":0,"q":"Cho P: “2 > 5” và Q: “3 + 3 = 6”. Mệnh đề nào sau đây đúng?","o":["P ⇒ Q","Q ⇒ P","P ⇔ Q","Q ⇒ ¬Q"]},{"t":0,"q":"Mệnh đề đảo của “Nếu tứ giác là hình chữ nhật thì tứ giác có hai đường chéo bằng nhau” là:","o":["Nếu tứ giác có hai đường chéo bằng nhau thì tứ giác là hình chữ nhật.","Nếu tứ giác không là hình chữ nhật thì hai đường chéo không bằng nhau.","Nếu tứ giác có hai đường chéo không bằng nhau thì tứ giác không là hình chữ nhật.","Tứ giác là hình chữ nhật khi và chỉ khi hai đường chéo bằng nhau."]},{"t":0,"q":"Mệnh đề nào sau đây đúng?","o":["∀n ∈ ℕ, n³ − n chia hết cho 6","∀n ∈ ℕ, n² + 1 chia hết cho 2","∀n ∈ ℕ, 2ⁿ + 1 là số nguyên tố","∃n ∈ ℕ, n² + n + 2 = 0"]},{"t":1,"q":"Cho A = {x ∈ ℝ | (x − 1)(x² − 4) = 0}. Liệt kê các phần tử của A:","o":["{−2; 1; 2}","{1; 2}","{−2; 2}","{−2; 1}"]},{"t":1,"q":"Cho A = (−∞; −1] và B = (−5; +∞). Tập hợp A ∩ B là:","o":["(−5; −1]","(−1; +∞)","(−∞; −5]","(−∞; +∞)"]},{"t":1,"q":"Cho A = (−2; +∞) và B = (−∞; 1]. Tập hợp A ∪ B là:","o":["(−∞; +∞)","∅","(1; +∞)","(−2; 1]"]},{"t":1,"q":"Cho A = [−3; +∞) và B = (−∞; 0). Tập hợp A \\ B là:","o":["[0; +∞)","(−∞; +∞)","∅","[−3; 0)"]},{"t":1,"q":"Cho A = (1; 6) và B = [3; 7). Tập hợp ℝ \\ (A ∪ B) là:","o":["(−∞; 1] ∪ [7; +∞)","[6; 7)","(1; 7)","(1; 3)"]},{"t":1,"q":"Cho A = [m; m + 2] và B = (1; 4). Điều kiện của m để A ⊂ B là:","o":["1 < m < 2","1 ≤ m ≤ 2","1 < m ≤ 2","m > 1"]},{"t":1,"q":"Cho A = [−3; 5) và B = (m; +∞). Điều kiện của m để A ∩ B = ∅ là:","o":["m ≥ 5","m > 5","m ≥ −3","m ≤ 5"]},{"t":1,"q":"Cho A = {1; 2; 3; 4; 5}. Có bao nhiêu tập con của A không chứa phần tử 1 và không chứa phần tử 2?","o":["8","4","16","32"]},{"t":1,"q":"Lớp 10A có 45 học sinh, trong đó 27 bạn thích bóng đá, 20 bạn thích bóng chuyền và 8 bạn không thích môn nào. Số bạn thích cả hai môn là:","o":["10","12","8","7"]},{"t":1,"q":"Cho A = {x ∈ ℕ | x ≤ 7} và B = {x ∈ ℕ | x lẻ, x ≤ 9}. Tập hợp A \\ B là:","o":["{0; 2; 4; 6}","{0; 2; 4; 6; 8}","{2; 4; 6}","{9}"]},{"t":1,"q":"Số tập con của tập hợp {x ∈ ℤ | −2 ≤ x < 3} là:","o":["32","16","25","64"]},{"t":1,"q":"Cho A = (−∞; 3) và B = [−1; 5]. Tập hợp (ℝ \\ A) ∩ B là:","o":["[3; 5]","(3; 5]","[−1; 3)","[−1; 5]"]},{"t":1,"q":"Có bao nhiêu số nguyên thuộc tập hợp (−3; 4] ∩ [−1; 6)?","o":["6","5","7","4"]},{"t":1,"q":"Cho ba tập hợp A, B, C thỏa mãn A ⊂ B, B ⊂ C và C ⊂ A. Khẳng định nào sau đây đúng?","o":["A = B = C","A ⊂ B nhưng B ⊄ A","C = ∅","A ∩ B = ∅"]},{"t":2,"q":"Cho hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + y ≤ 4\nĐiểm nào sau đây KHÔNG thuộc miền nghiệm của hệ?","o":["(3; 2)","(1; 2)","(0; 4)","(2; 2)"]},{"t":2,"q":"Đường thẳng d: 2x − y = 4 chia mặt phẳng thành hai nửa mặt phẳng. Miền nghiệm của bất phương trình 2x − y < 4 là nửa mặt phẳng bờ d:","o":["không kể bờ d và chứa gốc tọa độ O","kể cả bờ d và chứa gốc tọa độ O","không kể bờ d và không chứa gốc tọa độ O","kể cả bờ d và không chứa gốc tọa độ O"]},{"t":2,"q":"Cặp số nào sau đây là nghiệm của hệ bất phương trình\n§x + y ≤ 4\n§2x + 2y ≥ 5\n§2x − y > 2\n§x + y > 0","o":["(4; −1)","(−2; 6)","(2; 4)","(1; 5)"]},{"t":2,"q":"Cặp số nào sau đây là nghiệm của hệ bất phương trình\n§−x + y < 8\n§x + 3y < 7\n§x + y < 3\n§x + y > 0","o":["(0; 2)","(6; −2)","(0; −2)","(6; 4)"]},{"t":2,"q":"Cặp số nào sau đây KHÔNG là nghiệm của hệ bất phương trình\n§−x + 3y ≥ −1\n§−x + 2y ≥ −1\n§x + 3y ≥ 0\n§x + y ≥ 1","o":["(−2; −2)","(−1; 6)","(5; 3)","(4; 4)"]},{"t":2,"q":"Cặp số nào sau đây KHÔNG là nghiệm của hệ bất phương trình\n§x + 2y ≥ −2\n§2x + y > 3\n§2x + 2y ≥ 1\n§y > 1","o":["(−2; 3)","(4; 4)","(3; 2)","(6; 3)"]},{"t":2,"q":"Miền nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + y ≤ 7\nlà một đa giác. Diện tích của đa giác đó (đơn vị diện tích) bằng:","o":["24,5","25,5","23,5","49"]},{"t":2,"q":"Miền nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + y ≤ 7\n§x ≤ 5\nlà một đa giác. Diện tích của đa giác đó (đơn vị diện tích) bằng:","o":["22,5","25,5","23,5","21,5"]},{"t":2,"q":"Giá trị lớn nhất của biểu thức F = x + 4y trên miền nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + 2y ≤ 11","o":["22","0","24","23"]},{"t":2,"q":"Giá trị lớn nhất của biểu thức F = 2x + 4y trên miền nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§2x + 2y ≤ 7","o":["14","0","15","7"]},{"t":2,"q":"Giá trị nhỏ nhất của biểu thức F = 4x + 3y trên miền nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§2x + 3y ≥ 8\n§x ≤ 9","o":["8","7","10","16"]},{"t":2,"q":"Giá trị nhỏ nhất của biểu thức F = 2x + 3y trên miền nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + 2y ≥ 6\n§x ≤ 7","o":["9","10","8","14"]},{"t":0,"q":"Có bao nhiêu số nguyên n để mệnh đề chứa biến “n² − 5n + 4 < 0” là mệnh đề đúng?","a":"2","adv":false},{"t":0,"q":"Có bao nhiêu số nguyên dương n ≤ 30 làm cho mệnh đề “n chia hết cho 6 ⇒ n chia hết cho 4” là mệnh đề sai?","a":"3","adv":false},{"t":1,"q":"Cho A = {x ∈ ℝ | x² − 5x + 6 = 0} và B = {x ∈ ℝ | x² − 4 = 0}. Tập hợp A ∪ B có bao nhiêu phần tử?","a":"3","adv":false},{"t":1,"q":"Cho A = {1; 2; 3; 4; 5; 6} và B = {x ∈ ℕ | 3 ≤ x ≤ 8}. Tập hợp (A ∪ B) \\ (A ∩ B) có bao nhiêu phần tử?","a":"4","adv":false},{"t":1,"q":"Lớp có 40 học sinh, trong đó 28 bạn học tiếng Anh, 20 bạn học tiếng Pháp và 5 bạn không học môn nào. Có bao nhiêu bạn học cả hai môn?","a":"13","adv":false},{"t":2,"q":"Miền nghiệm của hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + y ≤ 6\n§x ≤ 4\nlà một đa giác. Diện tích của đa giác đó bằng bao nhiêu (đơn vị diện tích)?","a":"16","adv":false},{"t":2,"q":"Có bao nhiêu cặp số nguyên (x; y) thỏa mãn hệ bất phương trình\n§x ≥ 0\n§y ≥ 0\n§x + y ≤ 4 ?","a":"15","adv":false},{"t":2,"q":"Một cửa hàng trộn x kg gạo loại A (20 nghìn đồng/kg) và y kg gạo loại B (15 nghìn đồng/kg). Hỗn hợp phải có ít nhất 30 kg (x + y ≥ 30), trong đó gạo loại A không ít hơn 10 kg (x ≥ 10) và gạo loại B không ít hơn 5 kg (y ≥ 5). Chi phí nhỏ nhất là bao nhiêu nghìn đồng?","a":"500","adv":false},{"t":2,"q":"Một nhà máy sản xuất hai loại sản phẩm A và B. Để làm 1 sản phẩm A cần 1 kg nguyên liệu và 5 giờ máy; để làm 1 sản phẩm B cần 2 kg nguyên liệu và 1 giờ máy. Nhà máy có tối đa 32 kg nguyên liệu và 55 giờ máy; do kho nhỏ nên tổng số sản phẩm không vượt quá 19. Mỗi sản phẩm A lãi 6 triệu đồng, mỗi sản phẩm B lãi 8 triệu đồng. Lãi lớn nhất nhà máy thu được là bao nhiêu triệu đồng?","a":"140","adv":true},{"t":2,"q":"Một trại cá pha thức ăn từ hai loại cám A và B. Mỗi kg cám A chứa 1 đơn vị đạm và 2 đơn vị tinh bột; mỗi kg cám B chứa 1 đơn vị đạm và 4 đơn vị tinh bột. Mỗi ngày thức ăn cần ít nhất 8 đơn vị đạm và 20 đơn vị tinh bột, đồng thời tổng lượng cám không vượt quá 22 kg. Giá cám A là 8 nghìn đồng/kg, cám B là 9 nghìn đồng/kg. Chi phí nhỏ nhất mỗi ngày là bao nhiêu nghìn đồng?","a":"66","adv":true}]};
+var EXPL = {
+easy: [
+"Chỉ có “2 + 3 = 5” là khẳng định xác định được đúng/sai. Các câu còn lại là câu cảm thán, câu hỏi, câu mệnh lệnh nên không phải mệnh đề.",
+"Hà Nội là thủ đô của Việt Nam là đúng. 5 là số lẻ, −3 < 0, √2 là số vô tỉ nên ba phương án còn lại sai.",
+"9 = 3·3 nên 9 không phải số nguyên tố, vậy “9 là số nguyên tố” là mệnh đề sai.",
+"Phủ định của một khẳng định là thêm “không”: “Số 5 không là số nguyên tố”.",
+"Phủ định của “=” là “≠”, nên phủ định của “2 + 2 = 5” là “2 + 2 ≠ 5”.",
+"Phủ định của “chia hết” là “không chia hết”.",
+"P ⇒ Q chỉ sai trong đúng một trường hợp: P đúng mà Q sai.",
+"Mệnh đề có dạng “Nếu … thì …” là mệnh đề kéo theo P ⇒ Q.",
+"Kí hiệu ∀ đọc là “với mọi”.",
+"Kí hiệu ∃ đọc là “tồn tại” (có ít nhất một).",
+"x² ≥ 0 với mọi số thực x nên ∀x ∈ ℝ, x² ≥ 0 đúng. x² > 0 sai tại x = 0; x² < 0 không xảy ra; x > x² sai tại x = 1.",
+"“Nếu 2 > 5 thì 3 > 4”: vế đầu P sai nên P ⇒ Q luôn đúng. Ba phương án còn lại có P đúng, Q sai nên sai.",
+"“n + 1 là số chẵn” phụ thuộc vào n, chưa biết đúng hay sai cho đến khi chọn n nên là mệnh đề chứa biến.",
+"Phủ định đổi giá trị đúng/sai: P đúng thì ¬P sai.",
+"A có 5 phần tử: 2; 4; 6; 8; 10.",
+"a là phần tử của A nên viết a ∈ A. Kí hiệu ⊂ dùng giữa hai tập hợp, d ∉ A, còn {a} ⊂ A (không phải ∈).",
+"∅ là tập hợp rỗng, không có phần tử nào.",
+"A ∩ B gồm các phần tử chung của A và B: 2; 4; 7.",
+"A ∪ B gồm mọi phần tử thuộc A hoặc B (mỗi phần tử viết một lần): {2; 3; 4; 5; 6; 8}.",
+"A \\ B gồm phần tử thuộc A mà không thuộc B. 7 thuộc B nên bỏ đi, còn {6; 8}.",
+"ℕ là tập các số tự nhiên.",
+"Mọi số tự nhiên đều là số nguyên nên ℕ ⊂ ℤ.",
+"Tập có n phần tử có 2ⁿ tập con. Với n = 2 có 2² = 4 tập con: ∅, {a}, {b}, {a; b}.",
+"1 < x < 5 không lấy hai đầu mút nên viết (1; 5).",
+"(1; 5] đóng ở đầu 5 nên chứa số 5. Các tập còn lại không chứa 5.",
+"ℕ gồm cả số 0, x < 4 nên A = {0; 1; 2; 3}.",
+"Mọi phần tử của A (1 và 2) đều thuộc B nên A ⊂ B.",
+"Các số từ 0 đến 5 gồm 6 số, nên A có 6 phần tử.",
+"Bất phương trình bậc nhất hai ẩn có dạng ax + by ≤ c (hoặc <, ≥, >) với a, b không đồng thời bằng 0.",
+"Miền nghiệm của bất phương trình bậc nhất hai ẩn là một nửa mặt phẳng.",
+"Một đường thẳng chia mặt phẳng thành 2 nửa mặt phẳng.",
+"x ≥ 0 nghĩa là hoành độ không âm: nửa mặt phẳng bên phải trục Oy, kể cả trục Oy.",
+"y ≥ 0 nghĩa là tung độ không âm: nửa mặt phẳng phía trên trục Ox, kể cả trục Ox.",
+"Thay (2; 1): 2·2 + 1 = 5 ≤ 5 đúng. (3; 1) → 7; (2; 4) → 8; (3; 4) → 10 đều lớn hơn 5.",
+"Thay (0; 0): 0 ≤ 1 đúng. (2; 3) → 8; (1; 2) → 5; (4; 4) → 12 đều lớn hơn 1.",
+"Thay (0; 1): −0 + 2 = 2 ≤ 2 đúng. (2; 4) → 6; (0; 3) → 6; (3; 3) → 3 đều lớn hơn 2.",
+"Thay (1; 3) vào từng bất phương trình: x + y = 4 ≥ 4 đúng. 2x + y = 5 < 7; x + y = 4 < 6; 4 < 7 nên các câu còn lại sai.",
+"Cặp (1; 1): x ≥ 0, y ≥ 0 và 2·1 + 1 = 3 ≤ 6 đều đúng. (3; 1) cho 7 > 6; (−2; 1) có x < 0; (6; −1) có y < 0.",
+"Cặp (4; 0): 4 ≥ 0, 0 ≥ 0 và 4 + 0 = 4 ≤ 8 đúng. (−1; 2) có x < 0; (2; 6) cho 14 > 8; (−2; −1) có x, y < 0.",
+"Cặp (1; 1): 3·1 + 1 = 4 ≤ 5 đúng. (2; 4) → 10; (4; 0) → 12; (1; 5) → 8 đều lớn hơn 5.",
+"x² − 4 = 0 ⇔ x = 2 hoặc x = −2, vậy có 2 giá trị.",
+"(a) đúng, (b) sai vì 9 = 3·3, (c) đúng vì 15 = 5·3, (d) sai vì 7 là số lẻ. Có 2 mệnh đề đúng.",
+"x ∈ ℕ, x < 6 nên A = {0; 1; 2; 3; 4; 5}, có 6 phần tử.",
+"Tập có 3 phần tử có 2³ = 8 tập con.",
+"Số bạn chơi ít nhất một môn = 25 + 18 − 8 = 35 (trừ 8 bạn bị đếm hai lần).",
+"x + y ≤ 20 với x = 12 thì y ≤ 20 − 12 = 8. Vậy tối đa 8 kg gạo nếp.",
+"Miền nghiệm là tam giác có đỉnh O(0; 0), (6; 0), (0; 6). F = 2x + y lần lượt bằng 0; 12; 6. Giá trị lớn nhất là 12.",
+"Với x = 3: 3 + 2y ≤ 7 ⇔ y ≤ 2. Vậy y nguyên lớn nhất là 2.",
+"Hệ: 2x + y ≤ 100, x ≤ 40, x ≥ 0, y ≥ 0; lãi F = 3x + 2y. Các đỉnh: (0; 0) → 0; (40; 0) → 120; (40; 20) → 160; (0; 100) → 200. Lãi lớn nhất là 200 nghìn đồng.",
+"Miền nghiệm có các đỉnh (0; 4), (4; 0), (5; 0) và kéo dài lên trên. F = x + 2y lần lượt bằng 8; 4; 5. Giá trị nhỏ nhất là 4."
+],
+normal: [
+"Phủ định của ∀ là ∃, và phủ định của “>” là “≤”: ∃x ∈ ℝ, x² ≤ 0.",
+"Phủ định của ∃ là ∀, và phủ định của “=” là “≠”: ∀x ∈ ℕ, x² − 3x + 2 ≠ 0.",
+"Mệnh đề đảo của “P ⇒ Q” là “Q ⇒ P”: Nếu a² = b² thì a = b.",
+"Với n = 0 (hoặc 1) ta có n² = n nên ∃n ∈ ℕ, n² = n đúng. n² > n sai tại n = 0; x² = −1 vô nghiệm; không phải số nguyên nào cũng chia hết cho 2.",
+"P ⇔ Q đúng khi P và Q có cùng giá trị: cùng đúng hoặc cùng sai.",
+"Đảo của “a = b thì a³ = b³” là “a³ = b³ thì a = b” (đúng). Các đảo còn lại sai: a = 3 chia hết 3 nhưng không chia hết 6; hình thoi có 4 cạnh bằng nhau nhưng không là hình vuông; a = −1 có a² > 0 nhưng a < 0.",
+"“P ⇒ Q” đọc là “P là điều kiện đủ để có Q”: n chia hết cho 6 là điều kiện đủ để n chia hết cho 3.",
+"∀x ∈ ℝ, x² ≥ x sai: lấy x = 0,5 thì x² = 0,25 < 0,5. Các mệnh đề còn lại đúng (x = 0 hoặc 2; x² + 1 > 0; n = 0).",
+"Phủ định của “mọi … đều …” là “có ít nhất một … không …”.",
+"Phủ định của x ≥ 3 là x < 3.",
+"x² − 4x + 5 = (x − 2)² + 1 ≥ 1 > 0 với mọi x, nên phương án 1 đúng.",
+"Phủ định của P ⇒ Q là “P đúng nhưng Q sai”: a, b đều chia hết cho 5 nhưng a + b không chia hết cho 5.",
+"Với n = 2: n² = 4 chia hết cho 4 (vế trái đúng) nhưng 2 không chia hết cho 4 (vế phải sai), nên mệnh đề kéo theo sai.",
+"P đúng, Q sai (4 không chia hết cho 3). Q ⇒ P có Q sai nên đúng. Các phương án còn lại sai.",
+"x² − 5x + 6 = 0 ⇔ x = 2 hoặc x = 3, đều thuộc ℕ nên A = {2; 3}.",
+"x nguyên, −2 < x ≤ 3 nên x ∈ {−1; 0; 1; 2; 3}.",
+"Tập có 4 phần tử có 2⁴ = 16 tập con.",
+"Tập ∅ chỉ có đúng một tập con là chính nó.",
+"[1; 7] ∩ (5; 11] gồm các số lớn hơn 5 và không vượt quá 7: (5; 7].",
+"(−5; 0] ∪ (−3; 2) gộp lại thành (−5; 2).",
+"A \\ B gồm số thuộc (−2; 1) mà không thuộc (−1; 4), tức −2 < x ≤ −1: (−2; −1].",
+"B \\ A gồm số thuộc [−2; 2] mà không thuộc [−5; 1], tức 1 < x ≤ 2: (1; 2].",
+"A ∩ B = {3; 4}, hợp với C = {4; 6; 8} được {3; 4; 6; 8}.",
+"A ∪ B = {1; 2; 3; 4; 5; 6; 8}, bỏ các phần tử của C (1; 4; 9) được {2; 3; 5; 6; 8}.",
+"Vì A ⊂ B nên các phần tử chung của A và B chính là A: A ∩ B = A.",
+"n(A ∪ B) = n(A) + n(B) − n(A ∩ B) = 12 + 9 − 4 = 17.",
+"Khoảng (−3; 5] không chứa −3 nên số nguyên nhỏ nhất là −2.",
+"Tập con chứa 1 gồm 1 cùng một tập con tuỳ ý của {2; 3}: có 2² = 4 tập.",
+"Đường thẳng bờ của miền nghiệm của 2x + 3y ≥ 6 là 2x + 3y = 6.",
+"Thay O(0; 0): 0 < 3 đúng nên miền nghiệm chứa gốc O; dấu “<” nên không kể bờ d.",
+"(2; 0): 2·2 − 0 = 4 > 1 đúng. (1; 1) → 0; (2; 4) → −4; (0; 2) → −4 đều không lớn hơn 1.",
+"(2; 2): 2 + 4 = 6 > 4 đúng. (2; −2) → −2; (0; 2) → 4 (không > 4); (3; −1) → 1.",
+"(−3; 2): −6 − 6 = −12 < −1 đúng. (−3; −2) → 0; (−1; −3) → 7; (4; 3) → −1 (không < −1).",
+"Thay (−2; −2): x + 2y = −6 < 6 đúng. 3x + 2y = −10 < 1; −x + 3y = −4 không > −2; −4 không > 3.",
+"Thay (0; −1): x − y = 1 > −2 đúng. −x + y = −1 không > 1; 3x + y = −1 không > 2; 3x + 3y = −3 không ≥ 0.",
+"(2; 1): x, y ≥ 0; 2x + 3y = 7 ≤ 11; 2x − y = 3 ≥ 2, thỏa cả 4 bất phương trình. Các cặp còn lại có tọa độ âm.",
+"(3; 0): 3 + 0 ≤ 9 và 3 − 0 = 3 ≥ 1. Thỏa cả 4 bất phương trình. (4; −2), (4; −1) có y < 0; (4; 3) cho x − 2y = −2 < 1.",
+"(4; 1): 4 + 3 = 7 ≤ 9 và 4 − 1 = 3 ≥ 1, thỏa hệ. (4; 5) → 19 > 9; (−2; 2) có x < 0; (0; 6) → 18 > 9.",
+"Các đỉnh của miền nghiệm: (0; 0), (3; 0), (3; 1), (0; 3). F = 3x + 2y lần lượt bằng 0; 9; 11; 6. Giá trị lớn nhất là 11.",
+"Các đỉnh: (7/3; 0), (0; 7), (8; 0). F = 3x + 2y lần lượt bằng 7; 14; 24. Giá trị nhỏ nhất là 7.",
+"Các số nguyên tố nhỏ hơn 20: 2; 3; 5; 7; 11; 13; 17; 19, tổng cộng 8 số.",
+"x² − 5x + 6 = 0 ⇔ x = 2 hoặc x = 3. Tổng hai nghiệm là 2 + 3 = 5.",
+"|x| ≤ 4 với x nguyên nên x ∈ {−4; …; 4}, có 9 giá trị.",
+"Tập có 4 phần tử có 2⁴ = 16 tập con.",
+"Mỗi bạn thích ít nhất một môn nên 45 = 30 + 25 − x, suy ra x = 10 bạn thích cả hai.",
+"Các đỉnh: (0; 0), (4; 0), (3; 2), (0; 5). F = 3x + 2y lần lượt bằng 0; 12; 13; 10. Giá trị lớn nhất là 13.",
+"Các đỉnh: (0; 3), (2; 1), (4; 0). F = 2x + 3y lần lượt bằng 9; 7; 8. Giá trị nhỏ nhất là 7.",
+"2·12 + 3y ≤ 60 ⇔ 3y ≤ 36 ⇔ y ≤ 12. Tối đa 12 nồi loại II.",
+"Ràng buộc: 3x + y ≤ 36, 2x + 2y ≤ 52 (x + y ≤ 26). Các đỉnh: (0; 0), (12; 0), (5; 21), (0; 26). Lãi F = 8x + 5y: 0; 96; 145; 130. Lãi lớn nhất là 145 nghìn đồng.",
+"Ràng buộc: 2x + 2y ≥ 20 (x + y ≥ 10) và 3x + y ≥ 12. Chi phí F = 8x + 6y tại các đỉnh (0; 12), (1; 9), (10; 0) lần lượt là 72; 62; 80. Chi phí nhỏ nhất là 62 nghìn đồng."
+],
+hard: [
+"Phủ định của ∀x ∃y, y > x là ∃x ∀y, y ≤ x (đổi ∀ thành ∃, ∃ thành ∀, “>” thành “≤”).",
+"∀x ∃y: x + y = 0 đúng vì chọn y = −x. Các mệnh đề còn lại sai (không có x cố định thoả với mọi y; x = 0 thì xy = 0 ≠ 1).",
+"(1) sai (x = 0); (2) sai vì √2 là số vô tỉ; (3) đúng vì n(n + 1) là tích hai số tự nhiên liên tiếp nên chẵn; (4) sai vì x = −1/2 không là số nguyên. Chỉ có 1 mệnh đề đúng.",
+"(1) đúng (số 2); (2) đúng vì |x| ≥ x; (3) sai vì Δ = −3 < 0; (4) sai (n = 4 cho 21 = 3·7). Có 2 mệnh đề đúng.",
+"Phương trình x² − 2x + m = 0 có nghiệm ⇔ Δ' = 1 − m ≥ 0 ⇔ m ≤ 1.",
+"x² − 4x + m ≥ 0 với mọi x ⇔ Δ' = 4 − m ≤ 0 ⇔ m ≥ 4.",
+"Chứng minh phản chứng: giả sử giả thiết đúng và kết luận sai, tức n² chẵn và n lẻ.",
+"“x² > 4 ⇒ x > 2” sai khi x² > 4 nhưng x ≤ 2. Với x = −3: x² = 9 > 4 mà −3 < 2.",
+"Mệnh đề tương đương với P ⇒ Q là phản đảo ¬Q ⇒ ¬P: nếu n không chia hết cho 3 thì n² không chia hết cho 3.",
+"x² − 2x + 1 = (x − 1)² ≥ 0 với mọi x, nên ∃x, x² − 2x + 1 < 0 là mệnh đề sai.",
+"x² > 4 ⇔ x < −2 hoặc x > 2. Để mọi x > m đều có x² > 4 thì (m; +∞) phải nằm trong miền x > 2, tức m ≥ 2.",
+"P sai nên P ⇒ Q luôn đúng. Q ⇒ P có Q đúng, P sai nên sai; P ⇔ Q sai; Q ⇒ ¬Q sai.",
+"Đảo của “P ⇒ Q” là “Q ⇒ P”: nếu tứ giác có hai đường chéo bằng nhau thì là hình chữ nhật.",
+"n³ − n = (n − 1)n(n + 1) là tích ba số liên tiếp nên chia hết cho 2 và 3, tức chia hết cho 6. Các mệnh đề khác sai: n = 0 cho n² + 1 = 1; n = 3 cho 2ⁿ + 1 = 9; n² + n + 2 = 0 vô nghiệm.",
+"(x − 1)(x² − 4) = 0 ⇔ x = 1 hoặc x = 2 hoặc x = −2.",
+"(−∞; −1] ∩ (−5; +∞) = (−5; −1].",
+"(−2; +∞) ∪ (−∞; 1] phủ kín trục số nên bằng (−∞; +∞).",
+"[−3; +∞) \\ (−∞; 0) gồm các số ≥ −3 và không < 0, tức [0; +∞).",
+"A ∪ B = (1; 7) nên ℝ \\ (A ∪ B) = (−∞; 1] ∪ [7; +∞).",
+"A ⊂ B ⇔ m > 1 và m + 2 < 4, tức 1 < m < 2.",
+"A = [−3; 5) và B = (m; +∞) không có phần tử chung ⇔ m ≥ 5.",
+"Tập con của A không chứa 1 và 2 là tập con của {3; 4; 5}, có 2³ = 8 tập.",
+"Số bạn thích ít nhất một môn là 45 − 8 = 37. Gọi x là số bạn thích cả hai: 27 + 20 − x = 37, suy ra x = 10.",
+"A = {0; 1; …; 7}, B = {1; 3; 5; 7; 9}. A \\ B = {0; 2; 4; 6}.",
+"Tập {−2; −1; 0; 1; 2} có 5 phần tử nên có 2⁵ = 32 tập con.",
+"ℝ \\ A = [3; +∞). Giao với B = [−1; 5] là [3; 5].",
+"(−3; 4] ∩ [−1; 6) = [−1; 4], các số nguyên là −1; 0; 1; 2; 3; 4: có 6 số.",
+"A ⊂ B ⊂ C ⊂ A nên các tập bao nhau theo vòng, suy ra A = B = C.",
+"Điểm (3; 2) có x + y = 5 > 4 nên không thuộc miền nghiệm. Ba điểm còn lại đều thỏa hệ.",
+"Thay O(0; 0): 0 < 4 đúng nên miền nghiệm chứa gốc O; dấu “<” nên không kể bờ d.",
+"Cặp (4; −1): x + y = 3 ≤ 4; 2x + 2y = 6 ≥ 5; 2x − y = 9 > 2; x + y = 3 > 0, thỏa cả 4. Các cặp còn lại vi phạm ít nhất một bất phương trình.",
+"Cặp (0; 2): 2 < 8; 6 < 7; x + y = 2 < 3; 2 > 0, thỏa cả 4. (6; −2) có x + y = 4 không < 3; (0; −2) có x + y < 0; (6; 4) có x + y = 10.",
+"Cặp (−2; −2) làm x + 3y = −8 < 0, vi phạm bất phương trình thứ ba nên không là nghiệm. Ba cặp còn lại đều thỏa cả 4 bất phương trình.",
+"Cặp (−2; 3) có 2x + y = −1 không > 3 nên không là nghiệm. Ba cặp còn lại thỏa cả 4 bất phương trình.",
+"Miền nghiệm là tam giác vuông cân có hai cạnh góc vuông bằng 7: S = ½·7·7 = 24,5.",
+"Miền nghiệm là hình thang có đỉnh (0; 0), (5; 0), (5; 2), (0; 7). Cách tính: S = 24,5 (tam giác cạnh 7) trừ tam giác nhỏ ½·2·2 = 2, được 22,5.",
+"Các đỉnh: (0; 0), (11; 0), (0; 5,5). F = x + 4y lần lượt bằng 0; 11; 22. Giá trị lớn nhất là 22.",
+"x + y ≤ 3,5. Các đỉnh: (0; 0), (3,5; 0), (0; 3,5). F = 2x + 4y lần lượt bằng 0; 7; 14. Giá trị lớn nhất là 14.",
+"Miền nghiệm có đỉnh (0; 8/3) và (4; 0) (kéo dài lên trên, sang phải). F = 4x + 3y lần lượt bằng 8 và 16. Giá trị nhỏ nhất là 8.",
+"Các đỉnh: (0; 3), (6; 0), (7; 0). F = 2x + 3y lần lượt bằng 9; 12; 14. Giá trị nhỏ nhất là 9.",
+"n² − 5n + 4 < 0 ⇔ (n − 1)(n − 4) < 0 ⇔ 1 < n < 4, nên n = 2 hoặc n = 3: có 2 số.",
+"Bội của 6 (≤ 30): 6; 12; 18; 24; 30. Trong đó 12 và 24 chia hết cho 4. Các số làm mệnh đề sai là 6; 18; 30, tức 3 số.",
+"A = {2; 3}, B = {−2; 2}. A ∪ B = {−2; 2; 3} có 3 phần tử.",
+"A ∪ B = {1; …; 8}, A ∩ B = {3; 4; 5; 6}. Hiệu (A ∪ B) \\ (A ∩ B) = {1; 2; 7; 8}, có 4 phần tử.",
+"Có 40 − 5 = 35 bạn học ít nhất một môn. 28 + 20 − x = 35, suy ra x = 13.",
+"Miền nghiệm là hình thang có các đỉnh (0; 0), (4; 0), (4; 2), (0; 6). S = (6 + 2)/2 · 4 = 16.",
+"Với x = 0 có y = 0..4 (5 cặp); x = 1 có 4; x = 2 có 3; x = 3 có 2; x = 4 có 1. Tổng 5 + 4 + 3 + 2 + 1 = 15 cặp.",
+"Chi phí F = 20x + 15y với x + y ≥ 30, x ≥ 10, y ≥ 5. Tại các đỉnh (10; 20) và (25; 5): 500 và 575. Chi phí nhỏ nhất là 500 nghìn đồng.",
+"Ràng buộc: x + 2y ≤ 32, 5x + y ≤ 55, x + y ≤ 19. Lãi F = 6x + 8y tại các đỉnh (6; 13), (9; 10), (0; 16), (11; 0): 140; 134; 128; 66. Lãi lớn nhất là 140 triệu đồng.",
+"Ràng buộc: x + y ≥ 8, x + 2y ≥ 10, x + y ≤ 22. Chi phí F = 8x + 9y tại các đỉnh (6; 2), (0; 8), (10; 0): 66; 72; 80. Chi phí nhỏ nhất là 66 nghìn đồng."
+]};
+Object.keys(EXPL).forEach(function (m) { EXPL[m].forEach(function (t, i) { if (BANK[m][i]) BANK[m][i].e = t; }); });
+var FB_URL = 'https://toan-10-default-rtdb.firebaseio.com';
+var PATH = 'toan10';
+var VER = 'v1';
+var DRAFT_KEY = 'toan10-draft-' + VER;
+var LOCAL_KEY = 'toan10-local-' + VER;
+var PREF_KEY = 'toan10-pref';
+var MODES = {
+  easy:   { vi: 'Dễ',     mult: 1, pen: 0, desc: 'Nhận biết và tính toán cơ bản' },
+  normal: { vi: 'Thường', mult: 2, pen: 2, desc: 'Vận dụng, cần suy luận vài bước' },
+  hard:   { vi: 'Khó',    mult: 3, pen: 4, desc: 'Vận dụng cao, nhiều bẫy' }
+};
+var MODE_KEYS = ['easy', 'normal', 'hard'];
+var TOPICS = ['Mệnh đề', 'Tập hợp', 'Hệ bất phương trình'];
+var P_MCQ = 1, P_FILL = 5, P_ADV = 10, N_MCQ = 40, N_ALL = 50;
+var REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- tiện ích ---------- */
+function $(s, r) { return (r || document).querySelector(s); }
+function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+function h(tag, props, kids) {
+  var e = document.createElement(tag), k;
+  if (props) for (k in props) {
+    if (k === 'class') e.className = props[k];
+    else if (k === 'text') e.textContent = props[k];
+    else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), props[k]);
+    else e.setAttribute(k, props[k]);
+  }
+  (kids || []).forEach(function (c) { if (c != null) e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
+  return e;
+}
+function lsGet(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+function fmtTime(s) { var m = Math.floor(s / 60), x = s % 60; return (m < 10 ? '0' : '') + m + ':' + (x < 10 ? '0' : '') + x; }
+function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function maxOf(mode) { return 100 * MODES[mode].mult; }
+function pointsOf(q, i) { return i < N_MCQ ? P_MCQ : (q.adv ? P_ADV : P_FILL); }
+var toastT = null;
+function toast(msg) {
+  var old = $('.toast'); if (old) old.remove();
+  var t = h('div', { class: 'toast', text: msg, role: 'status' }); document.body.appendChild(t);
+  clearTimeout(toastT); toastT = setTimeout(function () { t.remove(); }, 1800);
+}
+
+/* ---------- chấm đáp án điền ---------- */
+function parseNum(s) {
+  s = String(s == null ? '' : s).trim().replace(/−/g, '-').replace(/\s+/g, '').replace(/,/g, '.');
+  if (!s) return NaN;
+  var m = s.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
+  if (m) { var d = parseFloat(m[2]); return d === 0 ? NaN : parseFloat(m[1]) / d; }
+  if (!/^-?\d+(?:\.\d+)?$/.test(s)) return NaN;
+  return parseFloat(s);
+}
+function fillOk(q, v) { var a = parseNum(q.a), b = parseNum(v); return isFinite(a) && isFinite(b) && Math.abs(a - b) < 1e-6; }
+
+/* ---------- hiển thị đề ---------- */
+function renderText(box, text) {
+  var lines = String(text).split('\n'), i = 0;
+  while (i < lines.length) {
+    if (lines[i].charAt(0) === '§') {
+      var items = [];
+      while (i < lines.length && lines[i].charAt(0) === '§') { items.push(lines[i].slice(1).trim()); i++; }
+      var sys = h('div', { class: 'sys' });
+      sys.style.setProperty('--n', items.length);
+      sys.appendChild(h('span', { class: 'brace', 'aria-hidden': 'true', text: '{' }));
+      var ls = h('div', { class: 'sys-l' });
+      items.forEach(function (t) { ls.appendChild(h('div', { text: t })); });
+      sys.appendChild(ls); box.appendChild(sys);
+    } else { box.appendChild(h('p', { text: lines[i] })); i++; }
+  }
+}
+
+/* ---------- trạng thái ---------- */
+var st = null, QS = null;
+var selMode = 'easy';
+var pref = lsGet(PREF_KEY) || {};
+var timerId = null, draftT = null;
+
+function newState(mode, name) {
+  var perm = [];
+  for (var i = 0; i < N_MCQ; i++) perm.push(shuffle([0, 1, 2, 3]));
+  var ans = []; for (i = 0; i < N_ALL; i++) ans.push(i < N_MCQ ? null : '');
+  return { v: VER, mode: mode, name: name, start: Date.now(), perm: perm, ans: ans, flags: {}, cur: 0 };
+}
+function saveDraftSoon() {
+  clearTimeout(draftT);
+  draftT = setTimeout(function () { if (st) lsSet(DRAFT_KEY, st); }, 300);
+}
+function answeredCount() {
+  var c = 0;
+  for (var i = 0; i < N_ALL; i++) { var a = st.ans[i]; if (i < N_MCQ ? a !== null : String(a).trim() !== '') c++; }
+  return c;
+}
+function isAnswered(i) { var a = st.ans[i]; return i < N_MCQ ? a !== null : String(a).trim() !== ''; }
+
+/* ---------- màn hình ---------- */
+function show(name) {
+  ['home', 'quiz', 'result'].forEach(function (x) { $('#' + x).hidden = x !== name; });
+  window.scrollTo(0, 0);
+  document.body.setAttribute('data-screen', name);
+}
+
+/* ---------- trang chủ ---------- */
+function buildModes() {
+  var box = $('#modes'); box.textContent = '';
+  MODE_KEYS.forEach(function (k) {
+    var m = MODES[k];
+    var b = h('button', { class: 'mode', type: 'button', role: 'radio', 'data-mode': k, 'aria-checked': k === selMode ? 'true' : 'false' }, [
+      h('span', { class: 'm-top' }, [h('span', { class: 'm-name', text: m.vi }), h('span', { class: 'm-mult', text: '×' + m.mult })]),
+      h('span', { class: 'm-desc', text: m.desc }),
+      h('span', { class: 'm-max' }, ['Tối đa ', h('b', { text: maxOf(k) + ' điểm' }), m.pen ? ' · sai trừ ' + m.pen : ' · sai không trừ'])
+    ]);
+    b.addEventListener('click', function () { selMode = k; pref.mode = k; lsSet(PREF_KEY, pref); buildModes(); });
+    box.appendChild(b);
+  });
+}
+function startFromHome() {
+  var name = $('#nameInput').value.replace(/\s+/g, ' ').trim();
+  if (name.length < 2) { $('#nameErr').textContent = 'Hãy nhập tên của bạn (ít nhất 2 ký tự).'; $('#nameInput').focus(); return; }
+  $('#nameErr').textContent = '';
+  pref.name = name; pref.mode = selMode; lsSet(PREF_KEY, pref);
+  if (lsGet(DRAFT_KEY)) {
+    modal({ title: 'Có bài đang làm dở', body: ['Bạn muốn bỏ bài cũ và bắt đầu bài mới không?'],
+      actions: [{ label: 'Giữ bài cũ', fn: function () { resumeDraft(); } }, { label: 'Bắt đầu bài mới', primary: true, fn: function () { lsDel(DRAFT_KEY); beginQuiz(selMode, name, null); } }] });
+    return;
+  }
+  beginQuiz(selMode, name, null);
+}
+
+/* ---------- làm bài ---------- */
+function beginQuiz(mode, name, saved) {
+  st = saved || newState(mode, name);
+  QS = BANK[st.mode];
+  var m = $('#qMode'); m.textContent = MODES[st.mode].vi + ' ×' + MODES[st.mode].mult;
+  m.style.setProperty('--m', 'var(--' + st.mode + ')');
+  $('#qWho').textContent = st.name;
+  buildNav();
+  show('quiz');
+  closeSide();
+  renderQuestion(null);
+  updateProgress();
+  startTimer();
+  lsSet(DRAFT_KEY, st);
+  $('#swAuto').setAttribute('aria-checked', pref.auto ? 'true' : 'false');
+}
+function resumeDraft() {
+  var d = lsGet(DRAFT_KEY);
+  if (!d || d.v !== VER || !BANK[d.mode]) { lsDel(DRAFT_KEY); return false; }
+  $('#nameInput').value = d.name;
+  beginQuiz(d.mode, d.name, d);
+  return true;
+}
+function startTimer() {
+  clearInterval(timerId);
+  var tick = function () { $('#qTimer').textContent = fmtTime(Math.max(0, Math.round((Date.now() - st.start) / 1000))); };
+  tick(); timerId = setInterval(tick, 1000);
+}
+function updateProgress() {
+  var c = answeredCount();
+  $('#qDone').textContent = c;
+  $('#qProg').style.width = (c / N_ALL * 100) + '%';
+  $$('.nb').forEach(function (b) {
+    var i = +b.getAttribute('data-i');
+    b.classList.toggle('done', isAnswered(i));
+    b.classList.toggle('cur', i === st.cur);
+    b.classList.toggle('flag', !!st.flags[i]);
+  });
+}
+function buildNav() {
+  var box = $('#ngrids'); box.textContent = '';
+  [['Phần I · Trắc nghiệm (1–40)', 0, N_MCQ], ['Phần II · Điền đáp án (41–50)', N_MCQ, N_ALL]].forEach(function (g) {
+    box.appendChild(h('div', { class: 'grid-t', text: g[0], style: 'margin-top:' + (g[1] ? '14px' : '0') }));
+    var grid = h('div', { class: 'ngrid' });
+    for (var i = g[1]; i < g[2]; i++) {
+      (function (i) {
+        var b = h('button', { class: 'nb' + (QS[i].adv ? ' adv' : ''), type: 'button', 'data-i': i, text: String(i + 1), 'aria-label': 'Câu ' + (i + 1) });
+        b.addEventListener('click', function () { go(i); closeSide(); });
+        grid.appendChild(b);
+      })(i);
+    }
+    box.appendChild(grid);
+  });
+}
+function go(i, dir) {
+  if (i < 0 || i >= N_ALL) return;
+  var d = dir || (i >= st.cur ? 'r' : 'l');
+  st.cur = i; renderQuestion(d); updateProgress(); saveDraftSoon();
+  window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' });
+}
+function renderQuestion(dir) {
+  var i = st.cur, q = QS[i];
+  var card = $('#qcard'); card.textContent = '';
+  card.className = 'qcard';
+  void card.offsetWidth;
+  if (dir) card.classList.add('enter-' + dir);
+  var head = h('div', { class: 'qhead' }, [
+    h('span', { class: 'qno' }, ['Câu ' + (i + 1), h('small', { text: ' / ' + N_ALL })]),
+    h('span', { class: 'pill', text: i < N_MCQ ? 'Trắc nghiệm' : 'Điền đáp án' }),
+    h('span', { class: 'pill', text: TOPICS[q.t] }),
+    q.adv ? h('span', { class: 'pill adv', text: '★ Nâng cao' }) : null,
+    h('span', { class: 'pill', text: '+' + pointsOf(q, i) * MODES[st.mode].mult + ' điểm' + (MODES[st.mode].pen ? ' · sai −' + MODES[st.mode].pen : '') })
+  ]);
+  card.appendChild(head);
+  var tx = h('div', { class: 'qtext' }); renderText(tx, q.q); card.appendChild(tx);
+  if (i < N_MCQ) {
+    var opts = h('div', { class: 'opts', role: 'group', 'aria-label': 'Các đáp án' });
+    st.perm[i].forEach(function (orig, k) {
+      var b = h('button', { class: 'opt', type: 'button', 'aria-pressed': st.ans[i] === k ? 'true' : 'false', 'data-k': k }, [
+        h('span', { class: 'lt', text: 'ABCD'.charAt(k) }), h('span', { class: 'tx', text: q.o[orig] })
+      ]);
+      b.addEventListener('click', function () { pick(k); });
+      opts.appendChild(b);
+    });
+    card.appendChild(opts);
+    card.appendChild(h('p', { class: 'hint desk-only', text: 'Phím tắt: A, B, C, D để chọn; ← → để chuyển câu; F để đánh dấu.' }));
+  } else {
+    var inp = h('input', { class: 'fill-in', id: 'fillIn', type: 'text', inputmode: 'none', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', maxlength: '12', 'aria-label': 'Đáp án của câu ' + (i + 1), placeholder: '…' });
+    inp.value = st.ans[i];
+    inp.addEventListener('input', function () { setFill(sanitize(inp.value)); });
+    var pad = h('div', { class: 'keypad' });
+    ['7', '8', '9', '⌫', '4', '5', '6', '/', '1', '2', '3', 'C', '±', '0', ',', '↵'].forEach(function (k) {
+      var cls = 'key' + ((k === '⌫' || k === 'C') ? ' fn del' : (k === '/' || k === '±' || k === '↵') ? ' fn' : '');
+      var b = h('button', { class: cls, type: 'button', text: k, 'aria-label': k === '⌫' ? 'Xóa một ký tự' : k === 'C' ? 'Xóa hết' : k === '±' ? 'Đổi dấu' : k === '↵' ? 'Sang câu sau' : k });
+      b.addEventListener('click', function () { padKey(k); });
+      pad.appendChild(b);
+    });
+    card.appendChild(h('div', { class: 'fill' }, [
+      h('label', { for: 'fillIn', text: 'Đáp án của bạn (nhập một số)' }), inp, pad,
+      h('p', { class: 'hint', text: 'Nhập số nguyên, số thập phân (dấu phẩy hoặc dấu chấm) hoặc phân số dạng a/b. Chỉ nhập số, không ghi đơn vị.' })
+    ]));
+  }
+  $('#btnPrev').disabled = i === 0;
+  $('#btnNext').textContent = i === N_ALL - 1 ? 'Nộp bài' : 'Sau →';
+  $('#btnFlag').textContent = st.flags[i] ? 'Bỏ đánh dấu' : 'Đánh dấu';
+}
+function sanitize(s) { return String(s).replace(/−/g, '-').replace(/[^0-9\-.,\/]/g, '').slice(0, 12); }
+function setFill(v) {
+  st.ans[st.cur] = v;
+  var inp = $('#fillIn'); if (inp && inp.value !== v) inp.value = v;
+  updateProgress(); saveDraftSoon();
+}
+function padKey(k) {
+  var v = String(st.ans[st.cur] || '');
+  if (k === '⌫') v = v.slice(0, -1);
+  else if (k === 'C') v = '';
+  else if (k === '±') v = v.charAt(0) === '-' ? v.slice(1) : '-' + v;
+  else if (k === '↵') { if (st.cur < N_ALL - 1) go(st.cur + 1, 'r'); else askSubmit(); return; }
+  else if (v.length < 12) v += k;
+  setFill(v);
+}
+function pick(k) {
+  var i = st.cur;
+  st.ans[i] = st.ans[i] === k ? null : k;
+  $$('.opt').forEach(function (b) { b.setAttribute('aria-pressed', st.ans[i] === +b.getAttribute('data-k') ? 'true' : 'false'); });
+  updateProgress(); saveDraftSoon();
+  if (pref.auto && st.ans[i] !== null && i < N_ALL - 1) setTimeout(function () { if (st && st.cur === i) go(i + 1, 'r'); }, 260);
+}
+function toggleFlag() {
+  var i = st.cur;
+  if (st.flags[i]) delete st.flags[i]; else st.flags[i] = 1;
+  $('#btnFlag').textContent = st.flags[i] ? 'Bỏ đánh dấu' : 'Đánh dấu';
+  toast(st.flags[i] ? 'Đã đánh dấu câu ' + (i + 1) : 'Đã bỏ đánh dấu');
+  updateProgress(); saveDraftSoon();
+}
+function openSide() {
+  $('#side').classList.add('open');
+  if (!$('#sideBack')) { var bd = h('div', { class: 'backdrop', id: 'sideBack' }); bd.addEventListener('click', closeSide); document.body.appendChild(bd); }
+}
+function closeSide() { $('#side').classList.remove('open'); var b = $('#sideBack'); if (b) b.remove(); }
+
+/* ---------- hộp thoại ---------- */
+function modal(o) {
+  closeModal();
+  var body = h('div', { class: 'body' });
+  (o.body || []).forEach(function (b) { body.appendChild(typeof b === 'string' ? h('p', { text: b }) : b); });
+  var acts = h('div', { class: 'acts' });
+  (o.actions || []).forEach(function (a) {
+    var b = h('button', { class: 'btn' + (a.primary ? ' primary' : '') + (a.danger ? ' danger' : ''), type: 'button', text: a.label });
+    b.addEventListener('click', function () { closeModal(); if (a.fn) a.fn(); });
+    acts.appendChild(b);
+  });
+  var m = h('div', { class: 'modal', role: 'dialog', 'aria-modal': 'true', 'aria-label': o.title }, [h('h2', { text: o.title }), body, acts]);
+  var ov = h('div', { class: 'overlay', id: 'modalOv' }, [m]);
+  ov.addEventListener('mousedown', function (e) { if (e.target === ov && !o.sticky) closeModal(); });
+  $('#overlayHost').appendChild(ov);
+  var first = $('.btn', acts); if (first) first.focus();
+}
+function closeModal() { var o = $('#modalOv'); if (o) o.remove(); }
+function modalOpen() { return !!$('#modalOv'); }
+function helpModal() {
+  function li(t) { return h('li', { text: t }); }
+  modal({ title: 'Cách làm bài và tính điểm', body: [
+    h('ul', null, [
+      li('Mỗi đề có 50 câu: 40 câu trắc nghiệm (Phần I) và 10 câu điền số (Phần II), trong đó 2 câu cuối là câu nâng cao.'),
+      li('Điểm gốc tối đa 100: trắc nghiệm 1 điểm/câu, điền số 5 điểm/câu, câu nâng cao 10 điểm/câu.'),
+      li('Điểm cuối cùng = điểm gốc × hệ số chế độ − điểm phạt: Dễ ×1, Thường ×2, Khó ×3.'),
+      li('Mỗi câu trả lời sai bị trừ điểm: Dễ không trừ, Thường trừ 2 điểm, Khó trừ 4 điểm. Câu bỏ trống không bị trừ. Điểm thấp nhất là 0.'),
+      li('Bảng xếp hạng riêng cho Toán, tách khỏi bài tiếng Anh. Điểm bằng nhau thì bạn nộp nhanh hơn xếp trên.'),
+      li('Bài làm dở được lưu trên máy, có thể đóng trang và làm tiếp.')
+    ])
+  ], actions: [{ label: 'Đã hiểu', primary: true }] });
+}
+
+/* ---------- nộp bài ---------- */
+function askSubmit() {
+  var un = N_ALL - answeredCount(), fl = Object.keys(st.flags).length;
+  var lines = ['Bạn đã trả lời ' + (N_ALL - un) + '/' + N_ALL + ' câu.'];
+  if (un) lines.push('Còn ' + un + ' câu chưa làm sẽ được tính 0 điểm.');
+  if (MODES[st.mode].pen) lines.push('Lưu ý: mỗi câu trả lời sai bị trừ ' + MODES[st.mode].pen + ' điểm. Câu bỏ trống không bị trừ.');
+  if (fl) lines.push('Có ' + fl + ' câu đang đánh dấu cần xem lại.');
+  modal({ title: 'Nộp bài?', body: lines, actions: [{ label: 'Làm tiếp' }, { label: 'Nộp bài', primary: true, fn: doSubmit }] });
+}
+function grade() {
+  var rows = [], raw = 0, correct = 0, wrong = 0, byT = [[0, 0], [0, 0], [0, 0]];
+  var mult = MODES[st.mode].mult, pen = MODES[st.mode].pen;
+  for (var i = 0; i < N_ALL; i++) {
+    var q = QS[i], ok = false, given = '', a = st.ans[i];
+    if (i < N_MCQ) { ok = a !== null && st.perm[i][a] === 0; given = a === null ? '' : q.o[st.perm[i][a]]; }
+    else { given = String(a || '').trim(); ok = fillOk(q, given); }
+    var p = pointsOf(q, i);
+    byT[q.t][1]++;
+    if (ok) { raw += p; correct++; byT[q.t][0]++; } else if (given) wrong++;
+    rows.push({ i: i, ok: ok, given: given, pts: ok ? p * mult : (given ? -pen : 0), max: p * mult });
+  }
+  var penalty = wrong * pen;
+  return { rows: rows, raw: raw, correct: correct, wrong: wrong, penalty: penalty, score: Math.max(0, raw * mult - penalty), byT: byT };
+}
+var lastResult = null;
+function doSubmit() {
+  clearInterval(timerId);
+  var secs = Math.max(1, Math.round((Date.now() - st.start) / 1000));
+  var g = grade();
+  var rec = { name: st.name, mode: st.mode, score: g.score, raw: g.raw, wrong: g.wrong, penalty: g.penalty, correct: g.correct, total: N_ALL, timeSec: secs, at: Date.now(), t: g.byT.map(function (x) { return x[0]; }) };
+  lastResult = { g: g, rec: rec, mode: st.mode, name: st.name, saved: 'pending', order: st.perm.map(function (p) { return p.slice(); }), qs: QS };
+  lsDel(DRAFT_KEY);
+  var ov = h('div', { class: 'overlay', id: 'gradeOv' }, [h('div', { class: 'modal grading', role: 'status' }, [h('div', { class: 'ring' }), h('h2', { text: 'Đang chấm bài…' }), h('p', { class: 'muted', text: 'Đang ghi điểm lên bảng xếp hạng' })])]);
+  $('#overlayHost').appendChild(ov);
+  var t0 = Date.now(), done = false;
+  function finish(state, err) {
+    if (done) return; done = true;
+    lastResult.saved = state; lastResult.err = err || null;
+    var wait = Math.max(0, 1100 - (Date.now() - t0));
+    setTimeout(function () { ov.remove(); showResult(); }, wait);
+  }
+  setTimeout(function () { finish('timeout'); }, 5000);
+  saveRecord(rec).then(function () { finish('shared'); }, function (e) { finish('local', e); });
+  if (!FB_URL) finish('local');
+}
+function saveRecord(rec) {
+  if (!FB_URL) return Promise.reject(new Error('nofb'));
+  return fetch(FB_URL.replace(/\/+$/, '') + '/' + PATH + '.json', { method: 'POST', body: JSON.stringify(rec) }).then(function (r) {
+    if (!r.ok) { var e = new Error('http'); e.status = r.status; throw e; }
+    dbRows.push(rec); return r.json();
+  });
+}
+
+/* ---------- kết quả ---------- */
+function showResult() {
+  var R = lastResult, g = R.g, rec = R.rec, mult = MODES[R.mode].mult;
+  if (R.saved !== 'shared') { localRows.push(rec); lsSet(LOCAL_KEY, localRows); }
+  var card = $('#scoreCard'); card.style.setProperty('--m', 'var(--' + R.mode + ')');
+  $('#rWho').textContent = R.name + ' · ' + MODES[R.mode].vi + ' ×' + mult;
+  $('#rMax').textContent = maxOf(R.mode);
+  $('#rCorrect').textContent = g.correct + '/' + N_ALL;
+  var wb = $('#rWrongBox');
+  if (MODES[R.mode].pen) { wb.hidden = false; $('#rWrong').textContent = g.wrong + ' (−' + g.penalty + ' điểm)'; } else wb.hidden = true;
+  $('#rTime').textContent = fmtTime(rec.timeSec);
+  $('#rRank').textContent = '…';
+  var pct = rec.score / maxOf(R.mode);
+  var weak = 0; g.byT.forEach(function (x, i) { if (x[0] / x[1] < g.byT[weak][0] / g.byT[weak][1]) weak = i; });
+  $('#rMsg').textContent = pct >= .9 ? 'Xuất sắc! Gần như không sai câu nào.' : pct >= .75 ? 'Giỏi! Xem lại vài câu sai là hoàn hảo.' : pct >= .5 ? 'Khá tốt. Nên ôn thêm phần ' + TOPICS[weak] + '.' : 'Cần ôn thêm. Bắt đầu với phần ' + TOPICS[weak] + '.';
+  var note = $('#saveNote');
+  if (R.saved === 'shared') note.hidden = true;
+  else {
+    note.hidden = false;
+    note.textContent = R.err && R.err.status === 401 ? 'Chưa ghi được lên bảng xếp hạng chung: Firebase chưa cho phép ghi vào mục Toán. Giáo viên cần dán lại Rules có thêm mục toan10. Điểm của bạn tạm lưu trên máy này.'
+      : R.saved === 'timeout' ? 'Mạng chậm nên chưa xác nhận được việc ghi điểm. Điểm của bạn tạm lưu trên máy này.'
+      : 'Chưa ghi được lên bảng xếp hạng chung (kiểm tra mạng). Điểm của bạn tạm lưu trên máy này.';
+  }
+  var bars = $('#rBars'); bars.textContent = '';
+  g.byT.forEach(function (x, i) {
+    var fill = h('i'); var row = h('div', { class: 'bar-row' }, [h('span', { class: 'tt', text: TOPICS[i] }), h('span', { class: 'b' }, [fill]), h('span', { class: 'n', text: x[0] + '/' + x[1] })]);
+    bars.appendChild(row);
+    setTimeout(function () { fill.style.width = (x[0] / x[1] * 100) + '%'; }, 120);
+  });
+  buildReview('all');
+  show('result');
+  lbTab = R.mode; renderBoards();
+  countUp($('#rScore'), rec.score);
+  if (pct >= .7) confetti();
+}
+function countUp(el, to) {
+  if (REDUCED) { el.textContent = to; return; }
+  var t0 = performance.now(), dur = 1100;
+  (function step(t) {
+    var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(to * e);
+    if (p < 1) requestAnimationFrame(step);
+  })(t0);
+}
+function buildReview(filter) {
+  var R = lastResult, fb = $('#rFilters'); fb.textContent = '';
+  var cnt = { all: N_ALL, wrong: 0, skip: 0 };
+  R.g.rows.forEach(function (r) { if (!r.ok) { cnt.wrong++; if (!r.given) cnt.skip++; } });
+  [['all', 'Tất cả (' + N_ALL + ')'], ['wrong', 'Câu sai (' + cnt.wrong + ')'], ['skip', 'Bỏ trống (' + cnt.skip + ')']].forEach(function (f) {
+    var b = h('button', { class: 'tab', type: 'button', role: 'tab', 'aria-selected': filter === f[0] ? 'true' : 'false', text: f[1] });
+    b.addEventListener('click', function () { buildReview(f[0]); });
+    fb.appendChild(b);
+  });
+  var box = $('#rReview'); box.textContent = '';
+  var shown = 0;
+  R.g.rows.forEach(function (r) {
+    if (filter === 'wrong' && r.ok) return;
+    if (filter === 'skip' && (r.ok || r.given)) return;
+    shown++;
+    var q = R.qs[r.i];
+    var cls = 'rv-item' + (r.ok ? ' ok' : (!r.given ? ' skip' : ''));
+    var qt = h('div', { class: 'rv-q' }); renderText(qt, q.q);
+    var item = h('div', { class: cls }, [
+      h('div', { class: 'rv-top' }, [h('span', { text: 'Câu ' + (r.i + 1) }), h('span', { class: 'pill', text: TOPICS[q.t] }), q.adv ? h('span', { class: 'pill adv', text: '★ Nâng cao' }) : null,
+        h('span', { class: 'pts', style: 'color:var(--' + (r.ok ? 'ok' : 'bad') + ')', text: (r.ok ? '+' : (r.pts < 0 ? '−' : '')) + Math.abs(r.pts) + '/' + r.max })]),
+      qt
+    ]);
+    if (r.i < N_MCQ) {
+      var o = h('div', { class: 'rv-opts' });
+      R.order[r.i].forEach(function (orig, k) {
+        var text = q.o[orig];
+        var c = 'rv-o' + (orig === 0 ? ' good' : (r.given && text === r.given ? ' wrong' : ''));
+        o.appendChild(h('div', { class: c }, [h('b', { text: 'ABCD'.charAt(k) + '.' }), h('span', { text: text })]));
+      });
+      item.appendChild(o);
+    } else {
+      item.appendChild(h('div', { class: 'rv-ans' }, [
+        r.given ? h('span', { class: r.ok ? 'key' : 'you', text: 'Bạn điền: ' + r.given }) : h('span', { class: 'muted', text: '(để trống)' }),
+        r.ok ? null : h('span', { class: 'key', text: 'Đáp án: ' + String(q.a).replace('.', ',') })
+      ]));
+    }
+    if (q.e) {
+      var ex = h('div', { class: 'rv-exp', hidden: '' }, [h('b', { text: 'Giải thích: ' }), h('span', { text: q.e })]);
+      var eb = h('button', { class: 'btn small ghost rv-exp-btn', type: 'button', 'aria-expanded': 'false', text: '💡 Xem giải thích' });
+      eb.addEventListener('click', function () {
+        var open = ex.hidden;
+        ex.hidden = !open;
+        eb.setAttribute('aria-expanded', open ? 'true' : 'false');
+        eb.textContent = open ? '🙈 Ẩn giải thích' : '💡 Xem giải thích';
+      });
+      item.appendChild(eb); item.appendChild(ex);
+    }
+    box.appendChild(item);
+  });
+  if (!shown) box.appendChild(h('div', { class: 'perfect', text: filter === 'all' ? 'Không có câu nào.' : 'Không có câu nào trong mục này.' }));
+}
+
+/* ---------- bảng xếp hạng ---------- */
+var dbRows = [], localRows = lsGet(LOCAL_KEY) || [], lbTab = 'all', lbState = 'loading', lbBusy = false;
+if (!Array.isArray(localRows)) localRows = [];
+function cleanRow(d) {
+  if (!d || typeof d.name !== 'string' || MODES[d.mode] === undefined) return null;
+  var sc = Number(d.score), tm = Number(d.timeSec);
+  if (!isFinite(sc) || !isFinite(tm)) return null;
+  var max = maxOf(d.mode);
+  return { name: d.name.slice(0, 30), mode: d.mode, score: Math.max(0, Math.min(max, Math.round(sc))), timeSec: Math.max(0, Math.round(tm)), at: Number(d.at) || 0 };
+}
+function better(a, b) {
+  if (a.score !== b.score) return a.score > b.score;
+  if (a.timeSec !== b.timeSec) return a.timeSec < b.timeSec;
+  return a.at < b.at;
+}
+function ranking(tab) {
+  var best = {};
+  dbRows.concat(localRows).forEach(function (d) {
+    var r = cleanRow(d); if (!r) return;
+    if (tab !== 'all' && r.mode !== tab) return;
+    var key = r.name.trim().toLowerCase(); if (!key) return;
+    r.key = key;
+    if (!best[key] || better(r, best[key])) best[key] = r;
+  });
+  var list = Object.keys(best).map(function (k) { return best[k]; });
+  list.sort(function (a, b) { return better(a, b) ? -1 : 1; });
+  return list;
+}
+function mountBoards() {
+  $$('.board-root').forEach(function (root) {
+    root.textContent = '';
+    var head = h('div', { class: 'lb-head' }, [h('div', null, [h('h2', { text: 'Bảng xếp hạng Toán' }), h('span', { class: 'sync', 'data-sync': '1' })])]);
+    var rf = h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Làm mới bảng xếp hạng', 'data-refresh': '1' });
+    rf.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>';
+    rf.addEventListener('click', function () { rf.classList.remove('spin'); void rf.offsetWidth; rf.classList.add('spin'); fetchBoard(true); });
+    head.appendChild(rf);
+    var tabs = h('div', { class: 'tabs', role: 'tablist' });
+    [['all', 'Tất cả'], ['easy', 'Dễ'], ['normal', 'Thường'], ['hard', 'Khó']].forEach(function (t) {
+      var b = h('button', { class: 'tab', type: 'button', role: 'tab', 'data-tab': t[0], text: t[1] });
+      b.addEventListener('click', function () { lbTab = t[0]; renderBoards(); });
+      tabs.appendChild(b);
+    });
+    root.appendChild(head); root.appendChild(tabs); root.appendChild(h('ul', { class: 'board' }));
+  });
+}
+function renderBoards() {
+  var list = ranking(lbTab);
+  var me = (lastResult && !$('#result').hidden) ? lastResult.name.trim().toLowerCase() : '';
+  var sync = lbState === 'loading' ? 'Đang kết nối…' : lbState === 'shared' ? 'Bảng chung, tự cập nhật' : 'Chỉ lưu trên máy này';
+  $$('[data-sync]').forEach(function (e) { e.textContent = sync; });
+  $$('.tab[data-tab]').forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-tab') === lbTab ? 'true' : 'false'); });
+  $$('.board').forEach(function (ul) {
+    ul.textContent = '';
+    if (!list.length) { ul.appendChild(h('li', { class: 'empty', style: 'display:block' }, [lbState === 'loading' ? 'Đang tải bảng xếp hạng…' : 'Chưa có ai nộp bài ở mục này. Bạn có thể là người đầu tiên.'])); return; }
+    var head = h('li', { class: 'colhead' });
+    ['Hạng', 'Tên', 'Điểm', 'Giờ'].forEach(function (t, i) { head.appendChild(h('span', { text: t, style: 'text-align:' + (i === 0 ? 'center' : i >= 2 ? 'right' : 'left') })); });
+    ul.appendChild(head);
+    list.slice(0, 50).forEach(function (r, i) {
+      var li = h('li', { class: i < 3 ? 'r' + (i + 1) : '' });
+      li.style.animationDelay = Math.min(i, 12) * 30 + 'ms';
+      if (me && r.key === me) li.classList.add('me');
+      var nm = h('span', { class: 'nm' }, [h('span', { class: 't', text: r.name + (me && r.key === me ? ' (bạn)' : '') })]);
+      if (lbTab === 'all') nm.appendChild(h('span', { class: 'tag ' + r.mode, text: MODES[r.mode].vi }));
+      li.appendChild(h('span', { class: 'rk', text: String(i + 1) }));
+      li.appendChild(nm);
+      li.appendChild(h('span', { class: 'sc', text: String(r.score) }));
+      li.appendChild(h('span', { class: 'tm', text: fmtTime(r.timeSec) }));
+      ul.appendChild(li);
+    });
+  });
+  if (lastResult && !$('#result').hidden) {
+    var own = ranking(lastResult.mode), idx = -1;
+    own.forEach(function (r, i) { if (r.key === lastResult.name.trim().toLowerCase()) idx = i; });
+    $('#rRank').textContent = idx >= 0 ? '#' + (idx + 1) + ' / ' + own.length + ' (' + MODES[lastResult.mode].vi + ')' : '…';
+  }
+}
+function fetchBoard(manual) {
+  if (!FB_URL) { lbState = 'local'; renderBoards(); return Promise.resolve(); }
+  if (lbBusy) return Promise.resolve();
+  lbBusy = true;
+  return fetch(FB_URL.replace(/\/+$/, '') + '/' + PATH + '.json').then(function (r) { if (!r.ok) throw new Error('http'); return r.json(); }).then(function (j) {
+    dbRows = j ? Object.keys(j).map(function (k) { return j[k]; }) : [];
+    lbState = 'shared'; lbBusy = false; renderBoards(); if (manual) toast('Đã cập nhật bảng xếp hạng');
+  }).catch(function () {
+    lbBusy = false; if (lbState !== 'shared') lbState = 'local'; renderBoards(); if (manual) toast('Chưa tải được bảng xếp hạng');
+  });
+}
+
+/* ---------- pháo giấy ---------- */
+function confetti() {
+  if (REDUCED) return;
+  var c = $('#confetti'), x = c.getContext('2d');
+  c.width = innerWidth; c.height = innerHeight;
+  var cols = ['#5B3DF5', '#F2BE2B', '#0B9A68', '#E0185F', '#38BDF8', '#FB923C'];
+  var ps = []; for (var i = 0; i < 140; i++) ps.push({ x: Math.random() * c.width, y: -20 - Math.random() * c.height * .5, w: 6 + Math.random() * 6, hh: 8 + Math.random() * 8, vx: -1.5 + Math.random() * 3, vy: 2 + Math.random() * 4, r: Math.random() * 6, vr: -.2 + Math.random() * .4, c: cols[i % cols.length] });
+  var t0 = performance.now();
+  (function frame(t) {
+    x.clearRect(0, 0, c.width, c.height);
+    ps.forEach(function (p) { p.x += p.vx; p.y += p.vy; p.r += p.vr; x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c; x.fillRect(-p.w / 2, -p.hh / 2, p.w, p.hh); x.restore(); });
+    if (t - t0 < 3200) requestAnimationFrame(frame); else x.clearRect(0, 0, c.width, c.height);
+  })(t0);
+}
+
+/* ---------- giao diện sáng tối ---------- */
+function applyTheme(t) {
+  if (t) document.documentElement.setAttribute('data-theme', t); else document.documentElement.removeAttribute('data-theme');
+}
+function currentDark() {
+  var t = document.documentElement.getAttribute('data-theme');
+  return t ? t === 'dark' : (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+}
+
+/* ---------- sự kiện ---------- */
+function bind() {
+  $('#btnStart').addEventListener('click', startFromHome);
+  $('#nameInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') startFromHome(); });
+  $('#btnHelp').addEventListener('click', helpModal);
+  $('#btnHelp2').addEventListener('click', helpModal);
+  $('#btnTheme').addEventListener('click', function () { var d = !currentDark(); pref.theme = d ? 'dark' : 'light'; lsSet(PREF_KEY, pref); applyTheme(pref.theme); });
+  $('#btnBrand').addEventListener('click', function () {
+    if (!$('#quiz').hidden) { askQuit(); return; }
+    show('home'); renderBoards();
+  });
+  $('#btnPrev').addEventListener('click', function () { go(st.cur - 1, 'l'); });
+  $('#btnNext').addEventListener('click', function () { if (st.cur === N_ALL - 1) askSubmit(); else go(st.cur + 1, 'r'); });
+  $('#btnFlag').addEventListener('click', toggleFlag);
+  $('#btnList').addEventListener('click', openSide);
+  $('#btnSideClose').addEventListener('click', closeSide);
+  $('#btnSubmit').addEventListener('click', function () { closeSide(); askSubmit(); });
+  $('#btnQuit').addEventListener('click', askQuit);
+  $('#swAuto').addEventListener('click', function () { pref.auto = !pref.auto; lsSet(PREF_KEY, pref); this.setAttribute('aria-checked', pref.auto ? 'true' : 'false'); });
+  $('#rRetry').addEventListener('click', function () { lsDel(DRAFT_KEY); beginQuiz(lastResult.mode, lastResult.name, null); });
+  $('#rOther').addEventListener('click', function () { selMode = lastResult.mode; buildModes(); $('#nameInput').value = lastResult.name; show('home'); });
+  $('#rHome').addEventListener('click', function () { show('home'); renderBoards(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { if (modalOpen()) closeModal(); else closeSide(); return; }
+    if (!st || $('#quiz').hidden || modalOpen() || e.ctrlKey || e.metaKey || e.altKey) return;
+    var t = e.target, typing = t && t.tagName === 'INPUT';
+    if (e.key === 'ArrowRight' && !typing) { go(st.cur + 1, 'r'); return; }
+    if (e.key === 'ArrowLeft' && !typing) { go(st.cur - 1, 'l'); return; }
+    if ((e.key === 'f' || e.key === 'F') && !typing && st.cur < N_MCQ) { toggleFlag(); return; }
+    if (st.cur < N_MCQ) {
+      var k = 'abcd1234'.indexOf(e.key.toLowerCase());
+      if (k >= 0 && e.key.length === 1) { pick(k % 4); e.preventDefault(); }
+    } else {
+      if (e.key === 'Enter') { e.preventDefault(); padKey('↵'); return; }
+      if (!typing) {
+        if (/^[0-9]$/.test(e.key) || e.key === ',' || e.key === '.' || e.key === '/') { padKey(e.key); e.preventDefault(); }
+        else if (e.key === '-') { padKey('±'); e.preventDefault(); }
+        else if (e.key === 'Backspace') { padKey('⌫'); e.preventDefault(); }
+      }
+    }
+  });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && !$('#home').hidden) fetchBoard(false); });
+}
+function askQuit() {
+  modal({ title: 'Thoát bài làm?', body: ['Bài làm dở được lưu trên máy này. Bạn có thể quay lại làm tiếp sau.'],
+    actions: [{ label: 'Ở lại' }, { label: 'Về trang chủ', fn: function () { clearInterval(timerId); show('home'); renderBoards(); } }, { label: 'Bỏ bài này', danger: true, fn: function () { clearInterval(timerId); lsDel(DRAFT_KEY); st = null; show('home'); renderBoards(); } }] });
+}
+
+/* ---------- màn hình chờ (tối đa 5 giây) ---------- */
+var LD_TIPS = ['Mẹo: phủ định của “với mọi” là “tồn tại”.', 'Mẹo: tập hợp có n phần tử có 2ⁿ tập con.', 'Mẹo: thử gốc tọa độ O(0; 0) để chọn nửa mặt phẳng.', 'Mẹo: n(A ∪ B) = n(A) + n(B) − n(A ∩ B).'];
+function runLoader(onDone) {
+  var t0 = Date.now(), hidden = false, ready = { fonts: false, lb: false };
+  var ld = $('#loader'), fill = $('#ldFill');
+  $('#ldTip').textContent = LD_TIPS[Math.floor(Math.random() * LD_TIPS.length)];
+  function finish() {
+    if (hidden) return; hidden = true; clearInterval(iv);
+    fill.style.width = '100%';
+    setTimeout(function () { ld.classList.add('out'); setTimeout(function () { ld.remove(); }, 600); onDone(); }, 220);
+  }
+  var iv = setInterval(function () {
+    var el = Date.now() - t0;
+    fill.style.width = Math.min(92, el / 4600 * 100) + '%';
+    if (el > 1400) $('#ldSkip').hidden = false;
+    if (el >= 5000) finish();
+    else if (el >= 1500 && ready.fonts && ready.lb) finish();
+  }, 120);
+  $('#ldSkip').addEventListener('click', finish);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ready.fonts = true; }); else ready.fonts = true;
+  fetchBoard(false).then(function () { ready.lb = true; }, function () { ready.lb = true; });
+  setTimeout(finish, 5000);
+}
+
+/* ---------- khởi động ---------- */
+function init() {
+  if (pref.theme) applyTheme(pref.theme);
+  if (pref.mode && MODES[pref.mode]) selMode = pref.mode;
+  if (pref.name) $('#nameInput').value = pref.name;
+  buildModes(); mountBoards(); bind(); renderBoards();
+  runLoader(function () {
+    var d = lsGet(DRAFT_KEY);
+    if (d && d.v === VER && BANK[d.mode]) {
+      show('home');
+      modal({ title: 'Tiếp tục bài đang làm?', body: ['Bạn có bài ' + MODES[d.mode].vi + ' đang làm dở (tên: ' + d.name + ').'],
+        actions: [{ label: 'Bỏ bài này', danger: true, fn: function () { lsDel(DRAFT_KEY); } }, { label: 'Làm tiếp', primary: true, fn: resumeDraft }], sticky: true });
+    } else { lsDel(DRAFT_KEY); show('home'); }
+  });
+  setInterval(function () { if (!document.hidden && !$('#home').hidden && !modalOpen()) fetchBoard(false); }, 15000);
+}
+init();
+})();
+</script>
+</body>
+</html>
